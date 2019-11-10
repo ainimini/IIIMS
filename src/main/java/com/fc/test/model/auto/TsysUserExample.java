@@ -572,63 +572,63 @@ public class TsysUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andBirthIsNull() {
-            addCriterion("birth is null");
+        public Criteria andBirthdateIsNull() {
+            addCriterion("birthdate is null");
             return (Criteria) this;
         }
 
-        public Criteria andBirthIsNotNull() {
-            addCriterion("birth is not null");
+        public Criteria andBirthdateIsNotNull() {
+            addCriterion("birthdate is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBirthEqualTo(Date value) {
-            addCriterionForJDBCDate("birth =", value, "birth");
+        public Criteria andBirthdateEqualTo(Date value) {
+            addCriterionForJDBCDate("birthdate =", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("birth <>", value, "birth");
+        public Criteria andBirthdateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("birthdate <>", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthGreaterThan(Date value) {
-            addCriterionForJDBCDate("birth >", value, "birth");
+        public Criteria andBirthdateGreaterThan(Date value) {
+            addCriterionForJDBCDate("birthdate >", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("birth >=", value, "birth");
+        public Criteria andBirthdateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthdate >=", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthLessThan(Date value) {
-            addCriterionForJDBCDate("birth <", value, "birth");
+        public Criteria andBirthdateLessThan(Date value) {
+            addCriterionForJDBCDate("birthdate <", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("birth <=", value, "birth");
+        public Criteria andBirthdateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthdate <=", value, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthIn(List<Date> values) {
-            addCriterionForJDBCDate("birth in", values, "birth");
+        public Criteria andBirthdateIn(List<Date> values) {
+            addCriterionForJDBCDate("birthdate in", values, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("birth not in", values, "birth");
+        public Criteria andBirthdateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("birthdate not in", values, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("birth between", value1, value2, "birth");
+        public Criteria andBirthdateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthdate between", value1, value2, "birthdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("birth not between", value1, value2, "birth");
+        public Criteria andBirthdateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthdate not between", value1, value2, "birthdate");
             return (Criteria) this;
         }
 

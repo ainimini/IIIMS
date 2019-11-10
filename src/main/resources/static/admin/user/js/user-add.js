@@ -91,6 +91,7 @@ function add() {
 		type : "POST",
 		url : rootPath + "/UserController/add",
 		data : dataFormJson,
+		dataType: "json",
 		async : false,
 		error : function(request) {
 			$.modal.alertError("系统错误");
@@ -100,4 +101,5 @@ function add() {
 		}
 	});
 }
+
 
