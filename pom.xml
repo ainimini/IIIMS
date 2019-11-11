@@ -188,8 +188,12 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-
-
+        <!--七牛云-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.0</version>
+        </dependency>
         <!--百度UEditor依赖的jar包 -->
         <dependency>
             <groupId>org.json</groupId>

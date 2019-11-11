@@ -48,6 +48,17 @@ spring :
           wall:
             config:
               multi-statement-allow: true
+# 七牛云配置
+# bucket是创建的存储空间名
+# path对应存储空间的访问域名
+qiniu:
+  accessKey : 5o-rVbYFTb4HbCpU5zVcNNNBj05vVio5TMHI5mhV
+  secretKey : C9TETPDFHDj38dymTDGtM9h-hyk-kcTeU61X8495
+  bucket : iiims-img
+  path : q0stnsal9.bkt.clouddn.com
+
+baseUploadUrl: D:\\Project\\Graduation Project\\qiniu_img
+
 #mysql 8.0
 #spring :
 #  datasource :
