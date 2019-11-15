@@ -5,13 +5,13 @@ import com.fc.test.common.exception.enums.ErrorEnum;
 import java.util.HashMap;
 
 /**
- * Result
- *
- * @author bobbi
- * @date 2018/10/07 13:28
- * @email 571002217@qq.com
- * @description 通用返回类
- */
+ * @ClassName Result
+ * @Description 通用返回类
+ * @Author X
+ * @Data 2019/11/13
+ * @Version 1.0
+ **/
+
 public class Result extends HashMap<String, Object> {
 
     public Result() {

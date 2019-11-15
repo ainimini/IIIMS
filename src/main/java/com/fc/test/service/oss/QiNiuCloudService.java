@@ -47,6 +47,15 @@ public class QiNiuCloudService {
 
     public Result uploadToQiNiu(MultipartFile uploadFile) throws IOException {
 
+        /**
+         * @title:
+         * @description: 七牛上传service
+         * @author: X
+         * @updateTime: 2019/11/15 13:57
+         * @return: com.fc.test.util.Result
+         * @param: [uploadFile]
+         * @throws:
+         */
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.huanan());
         //文件上传管理器
@@ -63,8 +72,6 @@ public class QiNiuCloudService {
         Response response = uploadManager.put(uploadFile.getBytes(), fileName, upToken);
         //解析上传成功的结果
         DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-        // System.out.println(putRet.key);
-        //System.out.println(putRet.hash);
         //成功 返回url name
         Result r = Result.ok()
                 .put("url", domain + "/" + putRet.key)

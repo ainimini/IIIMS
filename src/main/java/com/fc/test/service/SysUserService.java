@@ -222,6 +222,8 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample>{
 	 */
 	@Transactional
 	public int updateUserRoles(TsysUser record,List<String> roles) {
+		//更新用户信息
+		tsysUserMapper.updateByPrimaryKeySelective(record);
 		//先删除这个用户的所有角色
 		TSysRoleUserExample tSysRoleUserExample=new TSysRoleUserExample();
 		tSysRoleUserExample.createCriteria().andSysUserIdEqualTo(record.getId());

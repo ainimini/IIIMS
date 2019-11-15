@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * ErrorEnum
- *
- * @author bobbi
- * @date 2018/10/07 14:19
- * @email 571002217@qq.com
- * @description error类型枚举类
- */
+ * @ClassName ErrorEnum
+ * @Description error类型枚举类
+ * @Author X
+ * @Data 2019/11/13
+ * @Version 1.0
+ **/
+
 @Getter
 @AllArgsConstructor
 public enum ErrorEnum {
