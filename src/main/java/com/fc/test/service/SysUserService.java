@@ -1,8 +1,6 @@
 package com.fc.test.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fc.test.mapper.auto.TsysUserMapper;
@@ -48,7 +46,7 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample>{
 	//自动生成的角色dao
 	@Autowired
 	private TsysRoleMapper tsysRoleMapper;
-	
+
 	/**
 	 * 分页查询
 	 * @param pageNum
@@ -95,6 +93,7 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample>{
 	public int insertUserRoles(TsysUser record,List<String> roles) {
 		String userid=SnowflakeIdWorker.getUUID();
 		record.setId(userid);
+		//ossResourceService.getById()
 		if(StringUtils.isNotEmpty(roles)){
 			 for (String rolesid : roles) {
 				 TSysRoleUser roleUser=new TSysRoleUser(SnowflakeIdWorker.getUUID(), userid,rolesid);

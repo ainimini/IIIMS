@@ -107,8 +107,14 @@
                             <div class="form-group draggable">
                                 <label class="col-sm-3 control-label ">用户照片：</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" id="dataId" name="userPic">
+                                    <!-- <input type="hidden" id="dataId" name="dataId">-->
                                     <div id="dropz" class="dropzone"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <!--<img id="userPic" name="userPic" style="display: none"/>-->
+                                    <input type="text" id="userPic" class="form-control" name="userPic" style="display: none">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -183,59 +189,60 @@
         //文件上传
         Dropzone.autoDiscover = false;//防止报"Dropzone already attached."的错误
         var myDropzone = new Dropzone("#dropz", {
-            url: rootPath + "/UserController/uploadImg",//文件提交地址
-            method:"post",  //也可用put
-            paramName:"file", //默认为file
-            maxFiles:1,//一次性上传的文件数量上限
+            url: "/QiNiuCloudController/uploadToQiNiu",//文件提交地址
+            method: "post",  //也可用put
+            paramName: "file", //默认为file
+            maxFiles: 1,//一次性上传的文件数量上限
             maxFilesize: 2, //文件大小，单位：MB
             acceptedFiles: ".jpg,.gif,.png,.jpeg", //上传的类型
-            addRemoveLinks:true,
+            addRemoveLinks: true,
             parallelUploads: 1,//一次上传的文件数量
             //previewsContainer:"#preview",//上传图片的预览窗口
-            dictDefaultMessage:'拖动文件至此或者点击上传',
+            dictDefaultMessage: '拖动文件至此或者点击上传',
             dictMaxFilesExceeded: "您最多只能上传1个文件！",
             dictResponseError: '文件上传失败!',
             dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg。",
-            dictFallbackMessage:"浏览器不受支持!",
-            dictFileTooBig:"文件过大上传文件最大支持.",
+            dictFallbackMessage: "浏览器不受支持!",
+            dictFileTooBig: "文件过大上传文件最大支持.",
             dictRemoveLinks: "删除",
             dictCancelUpload: "取消",
-            init:function(){
-                this.on("addedfile", function(upfile) {
+            init: function () {
+                this.on("addedfile", function (file) {
                     //上传文件时触发的事件
 
                 });
-                this.on("success",function(upfile,data){
+                this.on("success", function (file, data) {
                     //上传成功触发的事件
-                    if(data!=null&&data!=""){
-                        if(data.code==200){
-                            $("#dataId").val(data.data);
-                        }else{
+                    if (data != null && data != "") {
+                        if (data.code == 200) {
+                            console.log(data.url);
+                            /*$("#userPic").val(data.data);*/
+                            $("#userPic").val("http://" + data.url);
+                            /*$("#userPic").show();*/
+                        } else {
                             $.modal.alertError("文件为null！");
-                            myDropzone.removeFile(upfile);
+                            myDropzone.removeFile(file);
                         }
                     }
 
                 });
-                this.on("error",function (upfile,data) {
+                this.on("error", function (file, data) {
                     //上传失败触发的事件
                     $.modal.alertError("上传失败！");
                 });
-                this.on("removedfile",function(upfile){//删除文件触发结果
+                this.on("removedfile", function (file) {//删除文件触发结果
                     $.ajax({
-                        url:window.rootPath+"/FileController/del_file",
-                        type:"post",
-                        data:{"ids":$("#dataId").val()},
-                        success:function(data){
+                        url: window.rootPath + "/FileController/del_file",
+                        type: "post",
+                        data: {"ids": $("#userPic").val()},
+                        success: function (data) {
                         }
                     })
-                    $("#dataId").val("");
+                    $("#userPic").val("");
                 });
             }
         });
     })
 </script>
-< /body>
-
-
-< /html>
+</body>
+</html>

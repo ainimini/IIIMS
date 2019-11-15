@@ -1,20 +1,13 @@
 package com.fc.test.controller.admin;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.fc.test.model.auto.TsysUser;
-import com.fc.test.service.QiNiuService;
-import com.google.gson.Gson;
-import com.qiniu.http.Response;
-import com.qiniu.storage.model.DefaultPutRet;
-import io.swagger.annotations.ApiOperation;
+import com.fc.test.service.oss.QiNiuCloudService;
+import com.fc.test.util.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -33,18 +26,10 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
-@RequestMapping("UserController")
+@RequestMapping("/UserController")
 @Api(value = "用户数据")
 public class UserController extends BaseController {
-
-    @Autowired
-    private QiNiuService qiNiuService;
-
-    @Value("${baseUploadUrl}")
-    private String url;
 
     private String prefix = "admin/user";
 
@@ -82,14 +67,14 @@ public class UserController extends BaseController {
     @PostMapping("add")
     @RequiresPermissions("system:user:add")
     @ResponseBody
-    public AjaxResult add(TsysUser user, Model model, @RequestParam(value="roles", required = false)List<String> roles){
-        int b=sysUserService.insertUserRoles(user,roles);
-		if(b>0){
-			return success();
-		}else{
-			return error();
-		}
-	}
+    public AjaxResult add(TsysUser user, Model model, @RequestParam(value = "roles", required = false) List<String> roles) {
+        int b = sysUserService.insertUserRoles(user, roles);
+        if (b > 0) {
+            return success();
+        } else {
+            return error();
+        }
+    }
 
     /**
      * 删除用户
@@ -176,30 +161,6 @@ public class UserController extends BaseController {
     @ResponseBody
     public AjaxResult editPwdSave(TsysUser tsysUser) {
         return toAjax(sysUserService.updateUserPassword(tsysUser));
-    }
-
-    /**
-     * 接受post方法，将表单传来的数据插入
-     * @param announce com.lingfei.admin.entity.Announce
-     * @return 服务端跳转到announce.html
-     */
-    @PostMapping(value = "/uploadImg")
-    @ApiOperation(value = "单个图片上传到七牛云")
-    public Map<String,Object> uploadImg(@RequestParam(value = "userPic")MultipartFile upfile) throws IOException {
-        Map<String,Object> map = new HashMap<>();
-        String fileName = upfile.getOriginalFilename();
-        File file = new File(url + fileName);
-        try{
-            //将MulitpartFile文件转化为file文件格式
-            upfile.transferTo(file);
-            Map response = qiNiuService.uploadFile(file);
-            Object imageName = response.get("imgName");
-            map.put("url",imageName);
-            map.put("state","SUCESS");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return map;
     }
 
 }

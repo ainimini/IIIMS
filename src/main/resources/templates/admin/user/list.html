@@ -139,7 +139,7 @@
 <script type="text/javascript" th:src="@{/static/admin/assets/js/right_hight.js}"></script>
 
 <script type="text/javascript">
-    <!--jquery export 表格导出插件 -->
+    <!--jqueryexport表格导出插件 -->
 
     <!-- 导出 -->
     var dataUrl = window.rootPath + "/UserController/list";
@@ -190,7 +190,10 @@
             },
             {
                 field: 'userPic',
-                title: '用户照片'
+                title: '用户照片',
+                formatter : function (value, row, index) {
+                    return "<img style='width: 50px;height: 50px;' src='"+value+"' alt=''>"
+                }
             },
             {
                 field: 'phone',
