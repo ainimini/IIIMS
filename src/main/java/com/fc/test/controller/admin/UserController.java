@@ -27,7 +27,7 @@ import io.swagger.annotations.Api;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/UserController")
+@RequestMapping("UserController")
 @Api(value = "用户数据")
 public class UserController extends BaseController {
 
