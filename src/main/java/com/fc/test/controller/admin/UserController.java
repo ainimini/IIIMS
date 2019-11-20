@@ -1,13 +1,10 @@
 package com.fc.test.controller.admin;
 
-import java.io.IOException;
 import java.util.*;
 
 import com.fc.test.model.auto.SysProvinceExample;
 import com.fc.test.model.auto.TsysUser;
 import com.fc.test.service.SysProvinceService;
-import com.fc.test.service.oss.QiNiuCloudService;
-import com.fc.test.util.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +23,9 @@ import com.fc.test.model.custom.TitleVo;
 import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("UserController")
+@RequestMapping("/UserController")
 @Api(value = "用户数据")
 public class UserController extends BaseController {
 
@@ -39,7 +35,7 @@ public class UserController extends BaseController {
     private String prefix = "admin/user";
 
 
-    @GetMapping("view")
+    @GetMapping("/view")
     @RequiresPermissions("system:user:view")
     public String view(ModelMap model) {
         String str = "用户";
@@ -48,7 +44,7 @@ public class UserController extends BaseController {
     }
 
 
-    @PostMapping("list")
+    @PostMapping("/list")
     @RequiresPermissions("system:user:list")
     @ResponseBody
     public Object list(Tablepar tablepar, String searchTxt) {
@@ -88,7 +84,7 @@ public class UserController extends BaseController {
      * @param ids
      * @return
      */
-    @PostMapping("remove")
+    @PostMapping("/remove")
     @RequiresPermissions("system:user:remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
@@ -106,7 +102,7 @@ public class UserController extends BaseController {
      * @param tsysUser
      * @return
      */
-    @PostMapping("checkLoginNameUnique")
+    @PostMapping("/checkLoginNameUnique")
     @ResponseBody
     public int checkLoginNameUnique(TsysUser tsysUser) {
         int b = sysUserService.checkLoginNameUnique(tsysUser);

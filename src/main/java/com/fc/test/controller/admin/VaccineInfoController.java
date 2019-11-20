@@ -27,13 +27,13 @@ import java.util.List;
  * @Version 1.0
  **/
 @Controller
-@RequestMapping("VaccineInfoController")
+@RequestMapping("/VaccineInfoController")
 public class VaccineInfoController extends BaseController{
 
     private String prefix = "admin/vaccine";
 
 
-    @GetMapping("view")
+    @GetMapping("/view")
     @RequiresPermissions("system:vaccineInfo:view")
     public String view(ModelMap model) {
         String str = "疫苗";
@@ -42,7 +42,7 @@ public class VaccineInfoController extends BaseController{
     }
 
 
-    @PostMapping("list")
+    @PostMapping("/list")
     @RequiresPermissions("system:vaccineInfo:list")
     @ResponseBody
     public Object list(Tablepar tablepar, String searchTxt) {
@@ -61,7 +61,7 @@ public class VaccineInfoController extends BaseController{
     }
 
     @Log(title = "疫苗新增")
-    @PostMapping("add")
+    @PostMapping("/add")
     @RequiresPermissions("system:vaccineInfo:add")
     @ResponseBody
     public AjaxResult add(TSysVaccineInfo vaccineInfo, Model model) {
@@ -79,7 +79,7 @@ public class VaccineInfoController extends BaseController{
      * @param ids
      * @return
      */
-    @PostMapping("remove")
+    @PostMapping("/remove")
     @RequiresPermissions("system:vaccineInfo:remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
