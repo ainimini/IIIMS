@@ -121,15 +121,4 @@ public class SysProvinceService{
 		return list.size();
 	}
 
-	/*public PageInfo<SysProvince> selectByProvince(SysProvince sysProvince){
-		SysProvinceExample testExample=new SysProvinceExample();
-		testExample.setOrderByClause("id ASC");
-		List<SysProvince> list= sysProvinceMapper.selectByExample(testExample);
-		PageInfo<SysProvince> pageInfo = new PageInfo<SysProvince>(list);
-		return  pageInfo;
-	}*/
-
-	/*public int selectByProvince(SysProvince record) {
-		return sysProvinceMapper.selectByProvince(record);
-	}*/
 }
