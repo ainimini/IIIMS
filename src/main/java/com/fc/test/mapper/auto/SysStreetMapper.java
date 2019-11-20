@@ -34,5 +34,5 @@ public interface SysStreetMapper {
     int updateByPrimaryKeySelective(SysStreet record);
 
     int updateByPrimaryKey(SysStreet record);
-  	  	
+
 }

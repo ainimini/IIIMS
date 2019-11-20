@@ -2,6 +2,8 @@ package com.fc.test.service;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.fc.test.model.auto.SysProvince;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
@@ -121,6 +123,5 @@ public class SysCityService {
 		List<SysCity> list=sysCityMapper.selectByExample(example);
 		return list.size();
 	}
-
 
 }

@@ -2,6 +2,8 @@ package com.fc.test.service;
 
 import java.util.List;
 import java.util.Arrays;
+
+import com.fc.test.model.auto.SysArea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
@@ -129,6 +131,4 @@ public class SysStreetService implements BaseService<SysStreet, SysStreetExample
 		List<SysStreet> list=sysStreetMapper.selectByExample(example);
 		return list.size();
 	}
-
-
 }

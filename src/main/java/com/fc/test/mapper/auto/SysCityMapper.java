@@ -3,6 +3,8 @@ package com.fc.test.mapper.auto;
 import com.fc.test.model.auto.SysCity;
 import com.fc.test.model.auto.SysCityExample;
 import java.util.List;
+
+import com.fc.test.model.auto.SysProvince;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysCityMapper {
@@ -27,4 +29,5 @@ public interface SysCityMapper {
     int updateByPrimaryKeySelective(SysCity record);
 
     int updateByPrimaryKey(SysCity record);
+
 }

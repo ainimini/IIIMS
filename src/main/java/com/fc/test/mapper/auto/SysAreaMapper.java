@@ -3,6 +3,8 @@ package com.fc.test.mapper.auto;
 import com.fc.test.model.auto.SysArea;
 import com.fc.test.model.auto.SysAreaExample;
 import java.util.List;
+
+import com.fc.test.model.auto.SysProvince;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysAreaMapper {
@@ -27,4 +29,5 @@ public interface SysAreaMapper {
     int updateByPrimaryKeySelective(SysArea record);
 
     int updateByPrimaryKey(SysArea record);
+
 }

@@ -3,7 +3,9 @@ package com.fc.test.controller.admin;
 import java.io.IOException;
 import java.util.*;
 
+import com.fc.test.model.auto.SysProvinceExample;
 import com.fc.test.model.auto.TsysUser;
+import com.fc.test.service.SysProvinceService;
 import com.fc.test.service.oss.QiNiuCloudService;
 import com.fc.test.util.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,6 +32,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("UserController")
 @Api(value = "用户数据")
 public class UserController extends BaseController {
+
+    @Autowired
+    private SysProvinceService sysProvinceService;
 
     private String prefix = "admin/user";
 
@@ -59,6 +64,7 @@ public class UserController extends BaseController {
     public String add(ModelMap modelMap) {
         //添加角色列表
         List<TsysRole> tsysRoleList = sysRoleService.queryList();
+        modelMap.addAttribute("provinceList",sysProvinceService.selectByExample(new SysProvinceExample()));
         modelMap.put("tsysRoleList", tsysRoleList);
         return prefix + "/add";
     }

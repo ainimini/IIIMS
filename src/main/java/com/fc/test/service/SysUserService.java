@@ -2,8 +2,11 @@ package com.fc.test.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.fc.test.mapper.auto.TsysUserMapper;
+import com.fc.test.mapper.custom.*;
 import com.fc.test.model.auto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +16,6 @@ import com.fc.test.common.base.BaseService;
 import com.fc.test.common.support.Convert;
 import com.fc.test.mapper.auto.TSysRoleUserMapper;
 import com.fc.test.mapper.auto.TsysRoleMapper;
-import com.fc.test.mapper.custom.RoleDao;
 import com.fc.test.model.custom.RoleVo;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.util.MD5Util;
@@ -21,6 +23,8 @@ import com.fc.test.util.SnowflakeIdWorker;
 import com.fc.test.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 /**
  * 系统用户
@@ -46,6 +50,18 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample> {
     //自动生成的角色dao
     @Autowired
     private TsysRoleMapper tsysRoleMapper;
+
+    @Autowired
+    private ProvinceDao provinceDao;
+
+    @Autowired
+    private CityDao cityDao;
+
+    @Autowired
+    private AreaDao areaDao;
+
+    @Autowired
+    private StreetDao streetDao;
 
     /**
      * 分页查询
@@ -82,6 +98,7 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample> {
      */
     @Override
     public int insertSelective(TsysUser record) {
+
         return tsysUserMapper.insertSelective(record);
     }
 
@@ -102,7 +119,46 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample> {
                 tSysRoleUserMapper.insertSelective(roleUser);
             }
         }
-
+        //省市区一般以数字的形式传入进来的，判断是否为数字
+        if (isNumeric(record.getProvinceCode())) {
+            //通过对应的省份的数字代号查出对应点的省份的名称
+            SysProvince sysProvince = provinceDao.queryProvinceByCode(record.getProvinceCode());
+            if (sysProvince != null) {
+                record.setProvinceCode(sysProvince.getProvinceName());
+            }
+        }
+        //省市区一般以数字的形式传入进来的，判断是否为数字
+        if (isNumeric(record.getCityCode())) {
+            //通过对应的城市的数字代号查出对应点的城市的名称
+            SysCity sysCity = cityDao.queryCityByCode(record.getCityCode());
+            if (sysCity != null) {
+                record.setCityCode(sysCity.getCityName());
+            }
+        }
+        //省市区一般以数字的形式传入进来的，判断是否为数字
+        if (isNumeric(record.getAreaCode())) {
+            //通过对应的地区的数字代号查出对应点的地区的名称
+            SysArea sysArea = areaDao.queryAreaByCode(record.getAreaCode());
+            if (sysArea != null) {
+                record.setAreaCode(sysArea.getAreaName());
+            }
+        }
+        //省市区一般以数字的形式传入进来的，判断是否为数字
+        if (isNumeric(record.getStreetCode())) {
+            //通过对应的街道的数字代号查出对应点的街道的名称
+            SysStreet sysStreet = streetDao.queryStreetByCode(record.getStreetCode());
+            if (sysStreet != null) {
+                record.setStreetCode(sysStreet.getStreetName());
+            }
+        }
+        //获取通过code查询出的地名
+        String recordProvince = record.getProvinceCode();
+        String recordCity = record.getCityCode();
+        String recordArea = record.getAreaCode();
+        String recordStreet = record.getStreetCode();
+        //获取详细地址
+        String detailedAddress = record.getDetailedAddress();
+        record.setHomeAddress(recordProvince + recordCity + recordArea + recordStreet + detailedAddress);
         //密码加密
         record.setPassword(MD5Util.encode(record.getPassword()));
         return tsysUserMapper.insertSelective(record);
