@@ -54,9 +54,13 @@ public class BaseController
 	//公告
 	@Autowired
 	public SysNoticeService sysNoticeService;
-    //公告
+    //疫苗信息
     @Autowired
-    public SysAccineInfoService sysAccineInfoService;
+    public SysVaccineInfoService sysVaccineInfoService;
+    //用户接种疫苗信息
+    @Autowired
+    public UserVaccinationService userVaccinationService;
+
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */

@@ -3,9 +3,10 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     #&zeroDateTimeBehavior=convertToNull 传入了0000-00-00，并没有设置正确的数据，那么这时默认抛出java.sql.SQLException异常 把日期转换为null代替异常处理
-    url: jdbc:mysql://47.240.48.172:3306/infantile_immune?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://localhost:3306/infantile_immune?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    #47.240.48.172
     username: root
-    password: 123456
+    password: root
     hikari:
       maxLifetime: 1765000
       maximumPoolSize: 15

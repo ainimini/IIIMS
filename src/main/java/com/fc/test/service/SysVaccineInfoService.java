@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2018年8月26日
  */
 @Service
-public class SysAccineInfoService implements BaseService<TSysVaccineInfo, TSysVaccineInfoExample> {
+public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysVaccineInfoExample> {
     //生成的疫苗dao
     @Autowired
     private TSysVaccineInfoMapper tSysVaccineInfoMapper;

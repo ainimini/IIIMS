@@ -86,13 +86,10 @@
         <!--<table tableName="t_sys_user_info" domainObjectName="TsysUserInfo" enableCountByExample="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
-        <table tableName="t_sys_vaccination_record_info" domainObjectName="TsysVaccinationRecordInfo" enableCountByExample="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <table tableName="t_sys_vaccine_info" domainObjectName="TsysVaccineInfo" enableCountByExample="true">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
         <table tableName="t_sys_vaccine_info" domainObjectName="TSysVaccineInfo" enableCountByExample="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="t_sys_user_vaccination_info" domainObjectName="TSysUserVaccinationInfo" enableCountByExample="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>-->
 

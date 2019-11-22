@@ -4,9 +4,6 @@ import com.fc.test.common.base.BaseController;
 import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.common.log.Log;
 import com.fc.test.model.auto.TSysVaccineInfo;
-import com.fc.test.model.auto.TsysRole;
-import com.fc.test.model.auto.TsysUser;
-import com.fc.test.model.custom.RoleVo;
 import com.fc.test.model.custom.TableSplitResult;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.model.custom.TitleVo;
@@ -16,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @ClassName VaccineInfoController
@@ -46,7 +41,7 @@ public class VaccineInfoController extends BaseController{
     @RequiresPermissions("system:vaccineInfo:list")
     @ResponseBody
     public Object list(Tablepar tablepar, String searchTxt) {
-        PageInfo<TSysVaccineInfo> page = sysAccineInfoService.list(tablepar, searchTxt);
+        PageInfo<TSysVaccineInfo> page = sysVaccineInfoService.list(tablepar, searchTxt);
         TableSplitResult<TSysVaccineInfo> result = new TableSplitResult<TSysVaccineInfo>(page.getPageNum(), page.getTotal(), page.getList());
         return result;
     }
@@ -65,7 +60,7 @@ public class VaccineInfoController extends BaseController{
     @RequiresPermissions("system:vaccineInfo:add")
     @ResponseBody
     public AjaxResult add(TSysVaccineInfo vaccineInfo, Model model) {
-        int b = sysAccineInfoService.insertSelective(vaccineInfo);
+        int b = sysVaccineInfoService.insertSelective(vaccineInfo);
         if (b > 0) {
             return success();
         } else {
@@ -83,7 +78,7 @@ public class VaccineInfoController extends BaseController{
     @RequiresPermissions("system:vaccineInfo:remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
-        int b = sysAccineInfoService.deleteByPrimaryKey(ids);
+        int b = sysVaccineInfoService.deleteByPrimaryKey(ids);
         if (b > 0) {
             return success();
         } else {
@@ -101,7 +96,7 @@ public class VaccineInfoController extends BaseController{
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") String id, ModelMap mmap) {
         //查询所有疫苗信息
-        mmap.put("TSysVaccineInfo", sysAccineInfoService.selectByPrimaryKey(id));
+        mmap.put("TSysVaccineInfo", sysVaccineInfoService.selectByPrimaryKey(id));
 
         return prefix + "/edit";
     }
@@ -113,7 +108,7 @@ public class VaccineInfoController extends BaseController{
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(TSysVaccineInfo tSysVaccineInfo) {
-        return toAjax(sysAccineInfoService.updateVaccineInfo(tSysVaccineInfo));
+        return toAjax(sysVaccineInfoService.updateVaccineInfo(tSysVaccineInfo));
     }
 
 }
