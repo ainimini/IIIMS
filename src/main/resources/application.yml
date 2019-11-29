@@ -78,7 +78,7 @@ pagehelper:
 # accessKey,secretKey 秘钥
 oss:
   qiniu:
-    domain: q0stnsal9.bkt.clouddn.com
-    accessKey: 5o-rVbYFTb4HbCpU5zVcNNNBj05vVio5TMHI5mhV
-    secretKey: C9TETPDFHDj38dymTDGtM9h-hyk-kcTeU61X8495
-    bucket: iiims-img
+    domain:
+    accessKey:
+    secretKey:
+    bucket: 
