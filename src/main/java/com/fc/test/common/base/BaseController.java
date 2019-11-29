@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 @Controller
 public class BaseController
 {
-	//系统用户
+	//系统管理员
 	@Autowired
 	public SysUserService sysUserService; 
 	
@@ -60,6 +60,10 @@ public class BaseController
     //用户接种疫苗信息
     @Autowired
     public UserVaccinationService userVaccinationService;
+    //用户
+    @Autowired
+    public ConsumerService consumerService;
+
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型

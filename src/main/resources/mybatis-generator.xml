@@ -91,6 +91,10 @@
         </table>
         <table tableName="t_sys_user_vaccination_info" domainObjectName="TSysUserVaccinationInfo" enableCountByExample="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="t_sys_consumer" domainObjectName="TSysConsumer" enableCountByExample="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>-->
+
     </context>
 </generatorConfiguration>

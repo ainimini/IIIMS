@@ -189,7 +189,7 @@
                         $("#vaccinationUserId").val(data.list[0].id);
                 },
                 error: function (request) {
-                   $.modal.alertError("用户不存在，请检查省份证的准确性！");
+                   $.modal.alertError("用户不存在，请检查身份证的准确性！");
                     $("#vaccinationUserNickname").val("");
                     $("#vaccinationUserId").val("");
                 }

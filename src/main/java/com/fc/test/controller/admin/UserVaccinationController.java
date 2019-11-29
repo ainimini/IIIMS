@@ -3,16 +3,14 @@ package com.fc.test.controller.admin;
 import com.fc.test.common.base.BaseController;
 import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.common.log.Log;
+import com.fc.test.model.auto.TSysConsumer;
 import com.fc.test.model.auto.TSysUserVaccinationInfo;
 import com.fc.test.model.auto.TSysVaccineInfoExample;
-import com.fc.test.model.auto.TsysUser;
 import com.fc.test.model.custom.TableSplitResult;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.model.custom.TitleVo;
-import com.fc.test.service.SysUserService;
 import com.fc.test.service.SysVaccineInfoService;
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +32,6 @@ public class UserVaccinationController extends BaseController {
 
     @Autowired
     private SysVaccineInfoService sysVaccineInfoService;
-
-    @Autowired
-    private SysUserService sysUserService;
 
     private String prefix = "admin/vaccination";
 
@@ -138,7 +133,7 @@ public class UserVaccinationController extends BaseController {
     @ResponseBody
     public Object checkVaccinationUserIdNumber(@RequestParam(value = "vaccinationUserIdNumber",required = false) String vaccinationUserIdNumber) {
         if (vaccinationUserIdNumber != ""){
-            PageInfo<TsysUser> result= userVaccinationService.checkVaccinationUserIdNumber(vaccinationUserIdNumber);
+            PageInfo<TSysConsumer> result= userVaccinationService.checkVaccinationUserIdNumber(vaccinationUserIdNumber);
             if(result.getSize() > 0){
                 return result;
             }else {

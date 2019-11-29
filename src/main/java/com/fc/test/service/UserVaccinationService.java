@@ -2,13 +2,11 @@ package com.fc.test.service;
 
 import com.fc.test.common.base.BaseService;
 import com.fc.test.common.support.Convert;
+import com.fc.test.mapper.auto.TSysConsumerMapper;
 import com.fc.test.mapper.auto.TSysUserVaccinationInfoMapper;
 import com.fc.test.mapper.auto.TsysUserMapper;
 import com.fc.test.mapper.custom.TsysUserDao;
-import com.fc.test.model.auto.TSysUserVaccinationInfo;
-import com.fc.test.model.auto.TSysUserVaccinationInfoExample;
-import com.fc.test.model.auto.TsysUser;
-import com.fc.test.model.auto.TsysUserExample;
+import com.fc.test.model.auto.*;
 import com.github.pagehelper.PageInfo;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.util.SnowflakeIdWorker;
@@ -36,6 +34,9 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
 
     @Autowired
     private TsysUserMapper tsysUserMapper;
+
+    @Autowired
+    private TSysConsumerMapper tSysConsumerMapper;
 
     /**
      * 分页查询
@@ -140,14 +141,14 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
      * @param tSysUserVaccinationInfo
      * @return
      */
-    public  PageInfo<TsysUser> checkVaccinationUserIdNumber(String vaccinationUserIdNumber) {
-        TsysUserExample testExample = new TsysUserExample();
+    public  PageInfo<TSysConsumer> checkVaccinationUserIdNumber(String vaccinationUserIdNumber) {
+        TSysConsumerExample testExample = new TSysConsumerExample();
         testExample.setOrderByClause("id+0 DESC");
         if (vaccinationUserIdNumber != null && !"".equals(vaccinationUserIdNumber)) {
             testExample.createCriteria().andIdNumberLike("%" + vaccinationUserIdNumber + "%");
         }
-        List<TsysUser> list = tsysUserMapper.selectByExample(testExample);
-        PageInfo<TsysUser> pageInfo = new PageInfo<TsysUser>(list);
+        List<TSysConsumer> list = tSysConsumerMapper.selectByExample(testExample);
+        PageInfo<TSysConsumer> pageInfo = new PageInfo<TSysConsumer>(list);
         return pageInfo;
     }
 }

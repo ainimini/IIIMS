@@ -1,35 +1,37 @@
 package com.fc.test.controller.admin;
 
-import java.util.List;
+import com.fc.test.model.auto.*;
+import com.fc.test.service.SysProvinceService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import com.fc.test.common.base.BaseController;
 import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.common.log.Log;
-import com.fc.test.model.auto.TsysRole;
-import com.fc.test.model.auto.TsysUser;
-import com.fc.test.model.custom.RoleVo;
 import com.fc.test.model.custom.TableSplitResult;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.model.custom.TitleVo;
 import com.github.pagehelper.PageInfo;
 
-import io.swagger.annotations.Api;
-
+/**
+ * @ClassName dell
+ * @Description TOOD
+ * @Author X
+ * @Data 2019/11/29
+ * @Version 1.0
+ **/
 @Controller
-@RequestMapping("/UserController")
-@Api(value = "用户数据")
-public class UserController extends BaseController{
+@RequestMapping("/ConsumerController")
+public class ConsumerController extends BaseController {
 
-    private String prefix = "admin/user";
+    @Autowired
+    private SysProvinceService sysProvinceService;
+
+    private String prefix = "admin/consumer";
 
     /**
      * 展示跳转页面
@@ -39,7 +41,7 @@ public class UserController extends BaseController{
      * @Date 2019年11月11日 下午4:14:34
      */
     @GetMapping("/view")
-    @RequiresPermissions("system:user:view")
+    @RequiresPermissions("system:consumer:view")
     public String view(ModelMap model)
     {
         String str="用户";
@@ -57,11 +59,11 @@ public class UserController extends BaseController{
      * @Date 2019年11月11日 下午4:14:40
      */
     @PostMapping("/list")
-    @RequiresPermissions("system:user:list")
+    @RequiresPermissions("system:consumer:list")
     @ResponseBody
-    public Object list(Tablepar tablepar,String searchTxt){
-        PageInfo<TsysUser> page=sysUserService.list(tablepar,searchTxt) ;
-        TableSplitResult<TsysUser> result=new TableSplitResult<TsysUser>(page.getPageNum(), page.getTotal(), page.getList());
+    public Object list(Tablepar tablepar, String searchTxt){
+        PageInfo<TSysConsumer> page=consumerService.list(tablepar,searchTxt);
+        TableSplitResult<TSysConsumer> result=new TableSplitResult<TSysConsumer>(page.getPageNum(), page.getTotal(), page.getList());
         return  result;
     }
     /**
@@ -75,8 +77,10 @@ public class UserController extends BaseController{
     public String add(ModelMap modelMap)
     {
         //添加角色列表
-        List<TsysRole> tsysRoleList=sysRoleService.queryList();
-        modelMap.put("tsysRoleList",tsysRoleList);
+       // List<TsysRole> tsysRoleList=sysRoleService.queryList();
+        //地区三级联动
+        modelMap.addAttribute("provinceList",sysProvinceService.selectByExample(new SysProvinceExample()));
+       // modelMap.put("tsysRoleList",tsysRoleList);
         return prefix + "/add";
     }
     /**
@@ -90,13 +94,13 @@ public class UserController extends BaseController{
      */
     @Log(title = "用户新增", action = "111")
     @PostMapping("/add")
-    @RequiresPermissions("system:user:add")
+    @RequiresPermissions("system:consumer:add")
     @ResponseBody
-    public AjaxResult add(TsysUser user,Model model,@RequestParam(value="roles", required = false)List<String> roles){
-        int b=sysUserService.insertUserRoles(user,roles);
-        if(b>0){
+    public AjaxResult add(TSysConsumer tSysConsumer, Model model) {
+        int b = consumerService.insertSelective(tSysConsumer);
+        if (b > 0) {
             return success();
-        }else{
+        } else {
             return error();
         }
     }
@@ -110,30 +114,13 @@ public class UserController extends BaseController{
     @RequiresPermissions("system:user:remove")
     @ResponseBody
     public AjaxResult remove(String ids){
-        int b=sysUserService.deleteByPrimaryKey(ids);
+        int b=consumerService.deleteByPrimaryKey(ids);
         if(b>0){
             return success();
         }else{
             return error();
         }
     }
-
-    /**
-     * 检查用户
-     * @param tsysUser
-     * @return
-     */
-    @PostMapping("/checkLoginNameUnique")
-    @ResponseBody
-    public int checkLoginNameUnique(TsysUser tsysUser){
-        int b=sysUserService.checkLoginNameUnique(tsysUser);
-        if(b>0){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
-
 
     /**
      * 修改用户
@@ -144,26 +131,21 @@ public class UserController extends BaseController{
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") String id, ModelMap mmap)
     {
-        //查询所有角色
-        List<RoleVo> roleVos=sysUserService.getUserIsRole(id);
-        mmap.put("roleVos",roleVos);
-        mmap.put("TsysUser", sysUserService.selectByPrimaryKey(id));
-
+        //通过id查询所有接种疫苗用户信息
+        mmap.put("TSysConsumer", consumerService.selectByPrimaryKey(id));
         return prefix + "/edit";
     }
 
     /**
      * 修改保存用户
      */
-    @RequiresPermissions("system:user:edit")
+    @RequiresPermissions("system:consumer:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(TsysUser tsysUser,@RequestParam(value="roles", required = false)List<String> roles)
+    public AjaxResult editSave(TSysConsumer tSysConsumer)
     {
-        return toAjax(sysUserService.updateUserRoles(tsysUser,roles));
+        return toAjax(consumerService.updateConsumer(tSysConsumer));
     }
-
-
 
     /**
      * 修改用户密码
@@ -174,19 +156,17 @@ public class UserController extends BaseController{
     @GetMapping("/editPwd/{id}")
     public String editPwd(@PathVariable("id") String id, ModelMap mmap)
     {
-        mmap.put("TsysUser", sysUserService.selectByPrimaryKey(id));
+        mmap.put("TSysConsumer", consumerService.selectByPrimaryKey(id));
         return prefix + "/editPwd";
     }
     /**
-     * 修改保存用户密码
+     * 修改保存用户
      */
-    @RequiresPermissions("system:user:editPwd")
+    @RequiresPermissions("system:consumer:editPwd")
     @PostMapping("/editPwd")
     @ResponseBody
-    public AjaxResult editPwdSave(TsysUser tsysUser)
+    public AjaxResult editPwdSave(TSysConsumer tSysConsumer)
     {
-        return toAjax(sysUserService.updateUserPassword(tsysUser));
+        return toAjax(consumerService.updateUserPassword(tSysConsumer));
     }
-
-
 }
