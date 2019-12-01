@@ -1,11 +1,11 @@
 package com.fc.test.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.fc.test.common.base.BaseController;
+import com.fc.test.common.conf.V2Config;
+import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.model.auto.SysNotice;
 import com.fc.test.model.auto.TsysUser;
 import com.fc.test.model.custom.BootstrapTree;
@@ -30,64 +30,67 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 /**
  * 后台方法
-* @ClassName: HomeController
-* @author fuce
-* @date 2019-10-21 00:10
-*
+ * @ClassName: HomeController
+ * @author fuce
+ * @date 2019-10-21 00:10
+ *
  */
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin")
 public class AdminController extends BaseController{
 	private static Logger logger=LoggerFactory.getLogger(AdminController.class);
-	
+
 	private String prefix = "admin";
-	
+
 	@ApiOperation(value="首页",notes="首页")
-	@GetMapping("index")
+	@GetMapping("/index")
 	public String index(HttpServletRequest request) {
-    	//获取菜单栏
-    	BootstrapTree bootstrapTree= sysPermissionService.getbooBootstrapTreePerm(ShiroUtils.getUserId());
-    	request.getSession().setAttribute("bootstrapTree", bootstrapTree);
-    	request.getSession().setAttribute("sessionUserName",ShiroUtils.getUser().getNickname());
-    	//获取公告信息
-    	List<SysNotice>  notices=sysNoticeService.getuserNoticeNotRead(ShiroUtils.getUser(),0);
-    	request.getSession().setAttribute("notices",notices);
+		//获取菜单栏
+		BootstrapTree bootstrapTree= sysPermissionService.getbooBootstrapTreePerm(ShiroUtils.getUserId());
+		request.getSession().setAttribute("bootstrapTree", bootstrapTree);
+		request.getSession().setAttribute("sessionUserName",ShiroUtils.getUser().getNickname());
+		//获取公告信息
+		List<SysNotice>  notices=sysNoticeService.getuserNoticeNotRead(ShiroUtils.getUser(),0);
+		request.getSession().setAttribute("notices",notices);
 		return prefix+"/index";
 	}
-	
+
 	@ApiOperation(value="局部刷新区域",notes="局部刷新区域")
-	@GetMapping("main")
+	@GetMapping("/main")
 	public String main(ModelMap map) {
 		setTitle(map, new TitleVo("首页", "首页", true,"欢迎进入", true, false));
 		return prefix+"/main";
 	}
-	
+
 	/**
 	 * 请求到登陆界面
 	 * @param request
 	 * @return
 	 */
 	@ApiOperation(value="请求到登陆界面",notes="请求到登陆界面")
-	@GetMapping("login")
-    public String login() {
-        try {
-            if ((null != SecurityUtils.getSubject() && SecurityUtils.getSubject().isAuthenticated()) || SecurityUtils.getSubject().isRemembered()) {
+	@GetMapping("/login")
+	public String login(ModelMap modelMap) {
+		try {
+			if ((null != SecurityUtils.getSubject() && SecurityUtils.getSubject().isAuthenticated()) || SecurityUtils.getSubject().isRemembered()) {
+				return "redirect:/"+prefix+"/index";
+			} else {
+				System.out.println("--进行登录验证..验证开始");
 
-            	return "redirect:/"+prefix+"/index";
-            } else {
-            	System.out.println("--进行登录验证..验证开始");
-                return "login";
-            }
-        } catch (Exception e) {
-        		e.printStackTrace();
-        }
-        return "login";
-    }
-	
+				modelMap.put("RollVerification", V2Config.getRollVerification());
+				System.out.println("V2Config.getRollVerification()>>>"+V2Config.getRollVerification());
+				return "login";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "login";
+	}
+
 	/**
 	 * 用户登陆验证
 	 * @param user
@@ -98,91 +101,99 @@ public class AdminController extends BaseController{
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("login")
-	public ModelAndView login(TsysUser user, String code, RedirectAttributes redirectAttributes, boolean rememberMe, HttpServletRequest request) {
-		 ModelAndView view =new ModelAndView();
-		 String scode = (String)request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		 //判断验证码
-		 if(StringUtils.isNotEmpty(scode)&&StringUtils.isNotEmpty(code)&&scode.equals(code)){
-			 String userName = user.getUsername();
-			 Subject currentUser = SecurityUtils.getSubject();
-			 if(!currentUser.isAuthenticated()) {
-				 UsernamePasswordToken token =new UsernamePasswordToken(userName,user.getPassword());
-				 try {
-					 if(rememberMe) {
-						 token.setRememberMe(true);
-					 }
-					 //存入用户
-					 currentUser.login(token);
-				 }catch (UnknownAccountException uae) {
-			            logger.info("对用户[" + userName + "]进行登录验证..验证未通过,未知账户");
-			            redirectAttributes.addFlashAttribute("message", "未知账户");
-			        } catch (IncorrectCredentialsException ice) {
-			            logger.info("对用户[" + userName + "]进行登录验证..验证未通过,错误的凭证");
-			            redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
-			        } catch (LockedAccountException lae) {
-			            logger.info("对用户[" + userName + "]进行登录验证..验证未通过,账户已锁定");
-			            redirectAttributes.addFlashAttribute("message", "账户已锁定");
-			        } catch (ExcessiveAttemptsException eae) {
-			            logger.info("对用户[" + userName + "]进行登录验证..验证未通过,错误次数过多");
-			            redirectAttributes.addFlashAttribute("message", "用户名或密码错误次数过多");
-			        } catch (AuthenticationException ae) {
-			            //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
-			            logger.info("对用户[" + userName + "]进行登录验证..验证未通过,堆栈轨迹如下");
-			            ae.printStackTrace();
-			            redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
-			        }
-			 }
-		 }else{
-			 redirectAttributes.addFlashAttribute("message", "验证码不正确");
-		 }
-		
-     	 if(StringUtils.isNotNull(ShiroUtils.getUser())) {
-         	 //跳转到 get请求的登陆方法
-    		 view.setViewName("redirect:/"+prefix+"/index");
-     	 }else {
-     		 view.setViewName("redirect:/"+prefix+"/login");
-     	 }
-     	
-		
-		 return view;
-		 
+	@PostMapping("/login")
+	@ResponseBody
+	public AjaxResult login(TsysUser user,String code,RedirectAttributes redirectAttributes,boolean rememberMe,HttpServletRequest request) {
+		//ModelAndView view =new ModelAndView();
+		Boolean yz=false;
+		//滚动验证
+		if(V2Config.getRollVerification()) {
+			yz=true;
+		}else {//图片验证
+			String scode = (String)request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+			yz=StringUtils.isNotEmpty(scode)&&StringUtils.isNotEmpty(code)&&scode.equals(code);
+		}
+		//判断验证码
+		if(yz){
+			String userName = user.getUsername();
+			Subject currentUser = SecurityUtils.getSubject();
+			//是否验证通过
+			if(!currentUser.isAuthenticated()) {
+				UsernamePasswordToken token =new UsernamePasswordToken(userName,user.getPassword());
+				try {
+					if(rememberMe) {
+						token.setRememberMe(true);
+					}
+					//存入用户
+					currentUser.login(token);
+					if(StringUtils.isNotNull(ShiroUtils.getUser())) {
+						//跳转到 get请求的登陆方法
+						//view.setViewName("redirect:/"+prefix+"/index");
+						return  AjaxResult.success();
+					}else {
+						return  AjaxResult.error(500,"未知账户");
+					}
+				}catch (UnknownAccountException uae) {
+					logger.info("对用户[" + userName + "]进行登录验证..验证未通过,未知账户");
+					return  AjaxResult.error(500,"未知账户");
+				} catch (IncorrectCredentialsException ice) {
+					logger.info("对用户[" + userName + "]进行登录验证..验证未通过,错误的凭证");
+					return AjaxResult.error(500, "用户名或密码不正确");
+				} catch (LockedAccountException lae) {
+					logger.info("对用户[" + userName + "]进行登录验证..验证未通过,账户已锁定");
+					return AjaxResult.error(500,"账户已锁定");
+				} catch (ExcessiveAttemptsException eae) {
+					logger.info("对用户[" + userName + "]进行登录验证..验证未通过,错误次数过多");
+					return AjaxResult.error(500,"用户名或密码错误次数过多");
+				} catch (AuthenticationException ae) {
+					//通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
+					logger.info("对用户[" + userName + "]进行登录验证..验证未通过,堆栈轨迹如下");
+					ae.printStackTrace();
+					return AjaxResult.error(500,"用户名或密码不正确");
+				}
+			}
+			return AjaxResult.error(500,"用户名或密码不正确");
+
+		}else{
+			return AjaxResult.error(500,"验证码不正确!");
+		}
+
 	}
-	
+
 	/**
 	 * 退出登陆
 	 * @return
 	 */
-	@GetMapping("Loginout")
+	@GetMapping("/Loginout")
 	public String LoginOut(HttpServletRequest request, HttpServletResponse response){
 		//在这里执行退出系统前需要清空的数据
 		Subject subject = SecurityUtils.getSubject();
-		 //注销
-        subject.logout();
-        return "redirect:/"+prefix+"/login";
+		//注销
+		subject.logout();
+		return "redirect:/"+prefix+"/login";
 	}
-	
-	
-	
-	
+
+
+
+
 	/****页面测试****/
 	@GetMapping("Out404")
 	public String Out404(HttpServletRequest request, HttpServletResponse response){
-		
-        return "redirect:/error/404";
+
+		return "redirect:/error/404";
 	}
-	
+
 	@GetMapping("Out403")
 	public String Out403(HttpServletRequest request, HttpServletResponse response){
-		
-        return "redirect:/error/403";
+
+		return "redirect:/error/403";
 	}
 	@GetMapping("Out500")
 	public String Out500(HttpServletRequest request, HttpServletResponse response){
-		
-        return "redirect:/error/500";
+
+		return "redirect:/error/500";
 	}
-	
+
 	/**
 	 * 权限测试跳转页面
 	 * @param request
@@ -192,8 +203,8 @@ public class AdminController extends BaseController{
 	@GetMapping("Outqx")
 	@RequiresPermissions("system:user:asd")
 	public String Outqx(HttpServletRequest request, HttpServletResponse response){
-		
-        return "redirect:/error/500";
+
+		return "redirect:/error/500";
 	}
 	/****页面测试EDN****/
 }

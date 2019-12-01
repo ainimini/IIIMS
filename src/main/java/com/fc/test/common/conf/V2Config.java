@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 读取项目相关配置
- * 
+ *
  * @author fuce
  */
 @Component
@@ -32,6 +32,10 @@ public class V2Config
     private static String email_account;
     /** 发送邮箱登录密码 */
     private static String email_password;
+    /** 演示模式 **/
+    private static String demoEnabled;
+    /** 滚动验证码 **/
+    private static Boolean rollVerification;
     public String getName()
     {
         return name;
@@ -69,55 +73,73 @@ public class V2Config
 
     public void setProfile(String profile)
     {
-    	V2Config.profile = profile;
+        V2Config.profile = profile;
     }
 
-	public static String getIsstatic() {
-		return isstatic;
-	}
+    public static String getIsstatic() {
+        return isstatic;
+    }
 
-	public static void setIsstatic(String isstatic) {
-		V2Config.isstatic = isstatic;
-	}
+    public static void setIsstatic(String isstatic) {
+        V2Config.isstatic = isstatic;
+    }
 
-	public static String getIsroot_dir() {
-		return isroot_dir;
-	}
+    public static String getIsroot_dir() {
+        return isroot_dir;
+    }
 
-	public static void setIsroot_dir(String isroot_dir) {
-		V2Config.isroot_dir = isroot_dir;
-	}
+    public static void setIsroot_dir(String isroot_dir) {
+        V2Config.isroot_dir = isroot_dir;
+    }
 
-	public static String getEmail_smtp() {
-		return email_smtp;
-	}
+    public static String getEmail_smtp() {
+        return email_smtp;
+    }
 
-	public static void setEmail_smtp(String email_smtp) {
-		V2Config.email_smtp = email_smtp;
-	}
+    public static void setEmail_smtp(String email_smtp) {
+        V2Config.email_smtp = email_smtp;
+    }
 
-	public static String getEmail_port() {
-		return email_port;
-	}
+    public static String getEmail_port() {
+        return email_port;
+    }
 
-	public static void setEmail_port(String email_port) {
-		V2Config.email_port = email_port;
-	}
+    public static void setEmail_port(String email_port) {
+        V2Config.email_port = email_port;
+    }
 
-	public static String getEmail_account() {
-		return email_account;
-	}
+    public static String getEmail_account() {
+        return email_account;
+    }
 
-	public static void setEmail_account(String email_account) {
-		V2Config.email_account = email_account;
-	}
+    public static void setEmail_account(String email_account) {
+        V2Config.email_account = email_account;
+    }
 
-	public static String getEmail_password() {
-		return email_password;
-	}
+    public static String getEmail_password() {
+        return email_password;
+    }
 
-	public static void setEmail_password(String email_password) {
-		V2Config.email_password = email_password;
-	}
-	
+    public static void setEmail_password(String email_password) {
+        V2Config.email_password = email_password;
+    }
+
+    public static String getDemoEnabled() {
+        return demoEnabled;
+    }
+
+    public static void setDemoEnabled(String demoEnabled) {
+        V2Config.demoEnabled = demoEnabled;
+    }
+
+    public static Boolean getRollVerification() {
+        return rollVerification;
+    }
+
+    public  void setRollVerification(Boolean rollVerification) {
+        V2Config.rollVerification = rollVerification;
+    }
+
+
+
 }

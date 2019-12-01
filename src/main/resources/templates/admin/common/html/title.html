@@ -28,7 +28,7 @@
            <div class="devider-vertical visible-lg"></div>
         </div>
         <!-- END欢迎div -->
-        
+
         <!-- 小控件 -->
         <div class="col-lg-2" th:if="${isControl eq true}">
             <div class="devider-vertical visible-lg"></div>
@@ -79,4 +79,7 @@
          </div>
      </li>
  </ul>
+ </div>
+ <!-- 通用js -->
+ <div th:include="admin/common/html/js :: onload_js">
  </div>
