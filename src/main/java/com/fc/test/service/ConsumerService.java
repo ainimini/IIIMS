@@ -144,68 +144,6 @@ public class ConsumerService implements BaseService<TSysConsumer, TSysConsumerEx
         return tSysConsumerMapper.insertSelective(record);
     }
 
-    /**
-     * 添加用户跟角色信息
-     *
-     * @param record
-     * @param roles
-     * @return
-     */
-    /*@Transactional
-    public int insertUserRoles(TSysConsumer record, List<String> roles) {
-        String userid = SnowflakeIdWorker.getUUID();
-        record.setId(userid);
-        if (StringUtils.isNotEmpty(roles)) {
-            for (String rolesid : roles) {
-                TSysRoleUser roleUser = new TSysRoleUser(SnowflakeIdWorker.getUUID(), userid, rolesid);
-                tSysRoleUserMapper.insertSelective(roleUser);
-            }
-        }
-        //省市区一般以数字的形式传入进来的，判断是否为数字
-        if (isNumeric(record.getProvinceCode())) {
-            //通过对应的省份的数字代号查出对应点的省份的名称
-            SysProvince sysProvince = provinceDao.queryProvinceByCode(record.getProvinceCode());
-            if (sysProvince != null) {
-                record.setProvinceCode(sysProvince.getProvinceName());
-            }
-        }
-        //省市区一般以数字的形式传入进来的，判断是否为数字
-        if (isNumeric(record.getCityCode())) {
-            //通过对应的城市的数字代号查出对应点的城市的名称
-            SysCity sysCity = cityDao.queryCityByCode(record.getCityCode());
-            if (sysCity != null) {
-                record.setCityCode(sysCity.getCityName());
-            }
-        }
-        //省市区一般以数字的形式传入进来的，判断是否为数字
-        if (isNumeric(record.getAreaCode())) {
-            //通过对应的地区的数字代号查出对应点的地区的名称
-            SysArea sysArea = areaDao.queryAreaByCode(record.getAreaCode());
-            if (sysArea != null) {
-                record.setAreaCode(sysArea.getAreaName());
-            }
-        }
-        //省市区一般以数字的形式传入进来的，判断是否为数字
-        if (isNumeric(record.getStreetCode())) {
-            //通过对应的街道的数字代号查出对应点的街道的名称
-            SysStreet sysStreet = streetDao.queryStreetByCode(record.getStreetCode());
-            if (sysStreet != null) {
-                record.setStreetCode(sysStreet.getStreetName());
-            }
-        }
-        //获取通过code查询出的地名
-        String recordProvince = record.getProvinceCode();
-        String recordCity = record.getCityCode();
-        String recordArea = record.getAreaCode();
-        String recordStreet = record.getStreetCode();
-        //获取详细地址
-        String detailedAddress = record.getDetailedAddress();
-        record.setHomeAddress(recordProvince + recordCity + recordArea + recordStreet + detailedAddress);
-        //密码加密
-        record.setPassword(MD5Util.encode(record.getPassword()));
-        return tSysConsumerMapper.insertSelective(record);
-    }*/
-
     @Override
     public TSysConsumer selectByPrimaryKey(String id) {
 
@@ -254,7 +192,7 @@ public class ConsumerService implements BaseService<TSysConsumer, TSysConsumerEx
     }
 
     /**
-     * 检查用户name
+     * 检查用户登录名称
      *
      * @param TSysConsumer
      * @return
@@ -266,40 +204,6 @@ public class ConsumerService implements BaseService<TSysConsumer, TSysConsumerEx
 
         return list.size();
     }
-
-    /**
-     * 获取所有权限 并且增加是否有权限字段
-     *
-     * @return
-     *//*
-    public List<RoleVo> getUserIsRole(String userid) {
-        List<RoleVo> list = new ArrayList<RoleVo>();
-        //查询出我的权限
-        List<TsysRole> myRoles = roleDao.queryUserRole(userid);
-        TsysRoleExample tsysRoleExample = new TsysRoleExample();
-        //查询系统所有的角色
-        List<TsysRole> tsysRoles = tsysRoleMapper.selectByExample(tsysRoleExample);
-        if (StringUtils.isNotEmpty(tsysRoles)) {
-            for (TsysRole tsysRole : tsysRoles) {
-                Boolean isflag = false;
-                RoleVo roleVo = new RoleVo(tsysRole.getId(), tsysRole.getName(), isflag);
-                for (TsysRole myRole : myRoles) {
-                    if (tsysRole.getId().equals(myRole.getId())) {
-                        isflag = true;
-                        break;
-                    }
-                }
-                if (isflag) {
-                    roleVo.setIscheck(true);
-                    list.add(roleVo);
-                } else {
-                    list.add(roleVo);
-                }
-            }
-        }
-        return list;
-    }*/
-
 
     /**
      * 修改用户密码

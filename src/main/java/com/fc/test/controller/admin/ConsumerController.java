@@ -169,4 +169,20 @@ public class ConsumerController extends BaseController {
     {
         return toAjax(consumerService.updateUserPassword(tSysConsumer));
     }
+
+    /**
+     * 检查用户登录名称
+     * @param tSysConsumer
+     * @return
+     */
+    @PostMapping("/checkLoginNameUnique")
+    @ResponseBody
+    public int checkLoginNameUnique(TSysConsumer tSysConsumer){
+        int b=consumerService.checkLoginNameUnique(tSysConsumer);
+        if(b>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
