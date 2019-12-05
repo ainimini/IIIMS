@@ -14,20 +14,20 @@
 
 </head>
 
-<body id="listbody">
+<body>
 <!-- 右边内容 -->
 <div class="wrap-fluid">
     <div class="container-fluid paper-wrap bevel tlbr">
         <!-- 内容 -->
         <!--标题 通用-->
-        <div th:replace="admin/common/html/title :: title(${title},${parenttitle},${isMsg},${msgHTML})">
-        </div>
+        <div th:replace="admin/common/html/title :: title(${title},${parenttitle},${isMsg},${msgHTML})"></div>
+        <div id="tp-weather-widget"></div>
         <!-- 结束标题 通用-->
-        <div class="content-wrap">
-            <!-- 结束内容 -->
+       <!-- <div class="content-wrap">
+            &lt;!&ndash; 结束内容 &ndash;&gt;
             <div class="row">
                 <div class="col-sm-12">
-                    <!-- 空白页开始-->
+                    &lt;!&ndash; 空白页开始&ndash;&gt;
                     <div class="nest" id="Blank_PageClose">
                         <div class="title-alt">
                             <h6>首页</h6>
@@ -43,14 +43,14 @@
                             </div>
                         </div>
                         <div class="body-nest" id="Blank_Page_Content">
-                            <div class="col-md-3" id="tp-weather-widget"></div>
+
                         </div>
                     </div>
                 </div>
-                <!-- 空白页结束 -->
+                &lt;!&ndash; 空白页结束 &ndash;&gt;
             </div>
-            <!-- 结束内容 -->
-        </div>
+            &lt;!&ndash; 结束内容 &ndash;&gt;
+        </div>-->
     </div>
 </div>
 <!-- 结束右边内容 -->
@@ -61,10 +61,24 @@
 </div>
 <script type="text/javascript" th:src="@{/static/admin/assets/js/toggle_close.js}"></script>
 
-<script>
+<!--<script>
     (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
     window.SeniverseWeatherWidget('show', {
         flavor: "slim",
+        location: "WX4FBXXFKE4F",
+        geolocation: true,
+        language: "zh-Hans",
+        unit: "c",
+        theme: "auto",
+        token: "50e8a41a-0bb4-4c4e-b4e0-4478f546ed07",
+        hover: "enabled",
+        container: "tp-weather-widget"
+    })
+</script>-->
+<script>
+    (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+    window.SeniverseWeatherWidget('show', {
+        flavor: "bubble",
         location: "WX4FBXXFKE4F",
         geolocation: true,
         language: "zh-Hans",
