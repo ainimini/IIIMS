@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fc.test.mapper.custom.QuartzDao">
-    <resultMap id="BaseResultMap" type="com.fc.test.mapper.auto.TSysVaccineInfo">
+<mapper namespace="com.fc.test.mapper.custom.VaccineInfoDao">
+    <resultMap id="BaseResultMap" type="com.fc.test.model.auto.TSysVaccineInfo">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="vaccine_name" jdbcType="VARCHAR" property="vaccineName"/>
         <result column="approval_number" jdbcType="VARCHAR" property="approvalNumber"/>
@@ -10,16 +10,10 @@
         <result column="effective_date" jdbcType="DATE" property="effectiveDate"/>
         <result column="factory_name" jdbcType="VARCHAR" property="factoryName"/>
         <result column="inventory" jdbcType="VARCHAR" property="inventory"/>
+        <result column="is_overdue" jdbcType="INTEGER" property="isOverdue" />
     </resultMap>
 
-
-    <select id="queryVaccineInfo" parameterType="String" resultType="com.fc.test.mapper.auto.TSysVaccineInfo">
+    <select id="queryVaccineInfo" parameterType="String" resultType="com.fc.test.model.auto.TSysVaccineInfo">
        select * from t_sys_vaccine_info
  </select>
-    <delete id="deleteVaccineInfo" parameterType="com.fc.test.mapper.auto.TSysVaccineInfo">
-        delete t_sys_vaccine_info
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
-        </if>
-    </delete>
 </mapper>

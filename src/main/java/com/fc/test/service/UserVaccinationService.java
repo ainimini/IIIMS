@@ -32,8 +32,8 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
     @Autowired
     private TSysUserVaccinationInfoMapper tSysUserVaccinationInfoMapper;
 
-    @Autowired
-    private TsysUserMapper tsysUserMapper;
+    //@Autowired
+   // private TsysUserMapper tsysUserMapper;
 
     @Autowired
     private TSysConsumerMapper tSysConsumerMapper;
@@ -69,7 +69,7 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
     }
 
     /**
-     * 添加疫苗
+     * 添加用户接种疫苗信息
      */
     @Override
     public int insertSelective(TSysUserVaccinationInfo record) {
@@ -123,7 +123,7 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
 
     /**
      * @title: updateVaccineInfo
-     * @description: 修改疫苗信息
+     * @description: 修改用户接种疫苗信息
      * @author: X
      * @updateTime: 2019/11/17 21:31
      */
@@ -138,7 +138,7 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
     /**
      * 通过接种疫苗用户身份证号检查用户
      *
-     * @param tSysUserVaccinationInfo
+     * @param vaccinationUserIdNumber
      * @return
      */
     public  PageInfo<TSysConsumer> checkVaccinationUserIdNumber(String vaccinationUserIdNumber) {

@@ -761,6 +761,66 @@ public class TSysVaccineInfoExample {
             addCriterion("inventory not between", value1, value2, "inventory");
             return (Criteria) this;
         }
+
+        public Criteria andIsOverdueIsNull() {
+            addCriterion("is_overdue is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueIsNotNull() {
+            addCriterion("is_overdue is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueEqualTo(Integer value) {
+            addCriterion("is_overdue =", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueNotEqualTo(Integer value) {
+            addCriterion("is_overdue <>", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueGreaterThan(Integer value) {
+            addCriterion("is_overdue >", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_overdue >=", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueLessThan(Integer value) {
+            addCriterion("is_overdue <", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueLessThanOrEqualTo(Integer value) {
+            addCriterion("is_overdue <=", value, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueIn(List<Integer> values) {
+            addCriterion("is_overdue in", values, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueNotIn(List<Integer> values) {
+            addCriterion("is_overdue not in", values, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueBetween(Integer value1, Integer value2) {
+            addCriterion("is_overdue between", value1, value2, "isOverdue");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsOverdueNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_overdue not between", value1, value2, "isOverdue");
+            return (Criteria) this;
+        }
     }
 
     /**

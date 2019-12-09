@@ -3,7 +3,9 @@ package com.fc.test.service;
 import com.fc.test.common.base.BaseService;
 import com.fc.test.common.support.Convert;
 import com.fc.test.mapper.auto.TSysVaccineInfoMapper;
-import com.fc.test.model.auto.*;
+import com.fc.test.mapper.custom.VaccineInfoDao;
+import com.fc.test.model.auto.TSysVaccineInfo;
+import com.fc.test.model.auto.TSysVaccineInfoExample;
 import com.fc.test.model.custom.Tablepar;
 import com.fc.test.util.SnowflakeIdWorker;
 import com.github.pagehelper.PageHelper;
@@ -12,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  * 系统用户
- *
  * @author fuce
  * @ClassName: SysUserService
  * @date 2018年8月26日
@@ -26,6 +30,9 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
     //生成的疫苗dao
     @Autowired
     private TSysVaccineInfoMapper tSysVaccineInfoMapper;
+    //手动书写疫苗dao
+    @Autowired
+    private VaccineInfoDao vaccineInfoDao;
 
     /**
      * 分页查询
@@ -61,8 +68,9 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
      */
     @Override
     public int insertSelective(TSysVaccineInfo record) {
-        String accineId=SnowflakeIdWorker.getUUID();
+        String accineId = SnowflakeIdWorker.getUUID();
         record.setId(accineId);
+        record.setIsOverdue(1);
         return tSysVaccineInfoMapper.insertSelective(record);
     }
 
@@ -126,5 +134,46 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
         return 1;
     }
 
+    /**
+     * @title: 定时任务
+     * @description: 定时查询数据库疫苗有效时间 当前时间大于等于有效期 将状态更改为2
+     * 状态码 1为没有过期 2为已过期
+     * @author: X
+     * @updateTime: 2019/12/9 19:35
+     * @return:
+     * @param:
+     * @throws:
+     */
+    public void vaccineDateQuartz() {
+        //格式换时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //获取当前时间
+        Date dateTime = new Date();
+        // 输出已经格式化的现在时间（24小时制）
+        String date = dateFormat.format(dateTime);
+        //查询vaccineInfoList
+        List<TSysVaccineInfo> vaccineInfoList = vaccineInfoDao.queryVaccineInfo();
+        //得到vaccine的有效日期
+        for (int i = 0; i < vaccineInfoList.size(); i++) {
+            //查得有效时间
+            String effectiveDate = vaccineInfoList.get(i).getEffectiveDate();
+            try {
+                if (dateFormat.parse(date).getTime() >= dateFormat.parse(effectiveDate).getTime()) {
+                    //查得id
+                    String vaccineId = vaccineInfoList.get(i).getId();
+                    TSysVaccineInfoExample tSysVaccineInfoExample = new TSysVaccineInfoExample();
+                    tSysVaccineInfoExample.createCriteria().andIdEqualTo(vaccineId);
+                    List<TSysVaccineInfo> vaccineInfos = tSysVaccineInfoMapper.selectByExample(tSysVaccineInfoExample);
+                    for (TSysVaccineInfo tSysVaccineInfo : vaccineInfos) {
+                        //更新状态 1为没有过期 2为已过期
+                        tSysVaccineInfo.setIsOverdue(2);
+                        tSysVaccineInfoMapper.updateByPrimaryKey(tSysVaccineInfo);
+                    }
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

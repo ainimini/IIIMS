@@ -5,6 +5,7 @@ import com.fc.test.common.domain.AjaxResult;
 import com.fc.test.common.log.Log;
 import com.fc.test.model.auto.TSysConsumer;
 import com.fc.test.model.auto.TSysUserVaccinationInfo;
+import com.fc.test.model.auto.TSysVaccineInfo;
 import com.fc.test.model.auto.TSysVaccineInfoExample;
 import com.fc.test.model.custom.TableSplitResult;
 import com.fc.test.model.custom.Tablepar;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -60,7 +63,15 @@ public class UserVaccinationController extends BaseController {
     @GetMapping("/add")
     public String add(ModelMap modelMap) {
         //查询疫苗数据库疫苗名称 返回给用户接种疫苗管理页面得到疫苗名称
-        modelMap.addAttribute("vaccineList", sysVaccineInfoService.selectByExample(new TSysVaccineInfoExample()));
+       /* List<TSysVaccineInfo> tSysVaccineInfos = sysVaccineInfoService.selectByExample(new TSysVaccineInfoExample());
+        for (int i = 0; i < tSysVaccineInfos.size(); i++){
+            Integer isOverdue = tSysVaccineInfos.get(i).getIsOverdue();
+            if (isOverdue == 1){
+                String vaccineName = tSysVaccineInfos.get(i).getVaccineName();
+            }
+            return null;
+        }*/
+        modelMap.addAttribute("vaccineList",sysVaccineInfoService.selectByExample(new TSysVaccineInfoExample()) );
         //添加角色列表
         return prefix + "/add";
     }

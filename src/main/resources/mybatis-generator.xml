@@ -95,6 +95,5 @@
         <table tableName="t_sys_consumer" domainObjectName="TSysConsumer" enableCountByExample="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>-->
-
     </context>
 </generatorConfiguration>

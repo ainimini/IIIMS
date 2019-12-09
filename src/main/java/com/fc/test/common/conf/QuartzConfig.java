@@ -1,24 +1,28 @@
-package test.com.quartz;
+package com.fc.test.common.conf;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.fc.test.common.quartz.MyAdaptableJobFactory;
+import com.fc.test.common.quartz.QuartzJob;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-
 /**
  * @ClassName dell
- * @Description Quartz配置类
+ * @Description TOOD
  * @Author X
- * @Data 2019/12/6
+ * @Data 2019/12/8
  * @Version 1.0
  **/
 @Configuration
 public class QuartzConfig {
 
-    //创建job对象
+    /**
+     * @description: 创建job对象
+     * @author: X
+     * @updateTime: 2019/12/9 19:47
+     */
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean() {
         JobDetailFactoryBean factory = new JobDetailFactoryBean();
@@ -27,7 +31,11 @@ public class QuartzConfig {
         return factory;
     }
 
-    //创建Trigger对象
+    /**
+     * @description: 创建Trigger对象
+     * @author: X
+     * @updateTime: 2019/12/9 19:49
+     */
     /*@Bean
     public SimpleTriggerFactoryBean simpleTriggerFactoryBean(JobDetailFactoryBean jobDetailFactoryBean) {
         SimpleTriggerFactoryBean factory = new SimpleTriggerFactoryBean();
@@ -40,18 +48,26 @@ public class QuartzConfig {
         return factory;
     }*/
 
-    //创建Cron Trigger
+    /**
+     * @description: 创建Cron Trigger
+     * @author: X
+     * @updateTime: 2019/12/9 19:48
+     */
     @Bean
     public CronTriggerFactoryBean cronTriggerFactoryBean(JobDetailFactoryBean jobDetailFactoryBean) {
         CronTriggerFactoryBean factory = new CronTriggerFactoryBean();
         //关联JobDetail对象
         factory.setJobDetail(jobDetailFactoryBean.getObject());
         //执行时间（毫秒）
-        factory.setCronExpression("0/2 * * * * ?");
+        factory.setCronExpression("0 0 0 * * ? *");
         return factory;
     }
 
-    //创建Scheduler对象
+    /**
+     * @description: 创建Scheduler对象
+     * @author: X
+     * @updateTime: 2019/12/9 19:48
+     */
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(CronTriggerFactoryBean cronTriggerFactoryBean, MyAdaptableJobFactory myAdaptableJobFactory) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();

@@ -60,7 +60,7 @@
                                 <label class="col-sm-3 control-label ">接种疫苗名称：</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="vaccinationName" name="vaccinationName">
-                                        <option th:each="list : ${vaccineList}" th:text="${list.vaccineName}">First
+                                        <option th:each="list : ${vaccineList}" th:if="${list.isOverdue == 1}" th:text="${list.vaccineName}">First
                                         </option>
                                     </select>
                                 </div>
