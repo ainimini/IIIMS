@@ -10,6 +10,7 @@ import com.fc.test.model.custom.Tablepar;
 import com.fc.test.util.SnowflakeIdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.List;
 
 /**
  * 系统用户
+ *
  * @author fuce
  * @ClassName: SysUserService
  * @date 2018年8月26日
@@ -41,11 +43,14 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
      * @param pageSize
      * @return
      */
-    public PageInfo<TSysVaccineInfo> list(Tablepar tablepar, String vaccineName) {
+    public PageInfo<TSysVaccineInfo> list(Tablepar tablepar, String vaccineName, Integer overdueType) {
         TSysVaccineInfoExample testExample = new TSysVaccineInfoExample();
         testExample.setOrderByClause("id+0 DESC");
         if (vaccineName != null && !"".equals(vaccineName)) {
             testExample.createCriteria().andVaccineNameLike("%" + vaccineName + "%");
+        }
+        if (overdueType != null && !"".equals(overdueType)) {
+            testExample.createCriteria().andIsOverdueEqualTo(overdueType);
         }
 
         PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
@@ -176,4 +181,15 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
         }
     }
 
+    /**
+     * @description: 疫苗有效期类别
+     * @author: X
+     * @updateTime: 2019/12/16 14:28
+     */
+   /* public PageInfo<TSysVaccineInfo> listType(Integer overdueType) {
+       // PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
+        List<TSysVaccineInfo> listType = vaccineInfoDao.queryVaccineType(overdueType);
+        PageInfo<TSysVaccineInfo> pageInfo = new PageInfo<TSysVaccineInfo>(listType);
+        return pageInfo;
+    }*/
 }

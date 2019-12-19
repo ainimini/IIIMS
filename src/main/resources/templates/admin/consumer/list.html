@@ -36,36 +36,6 @@
             <!-- 结束内容 -->
             <div class="row">
                 <div class="col-sm-12">
-                    <!-- 搜索条件 -->
-
-                    <!--<div class="nest" id="inlineClose">
-                           <div class="title-alt">
-                               <h6>搜索条件</h6>
-                               <div class="titleClose">
-                                   <a class="gone" href="#inlineClose">
-                                       <span class="entypo-cancel"></span>
-                                   </a>
-                               </div>
-                               <div class="titleToggle">
-                                   <a class="nav-toggle-alt" href="#search_div">
-                                       <span class="entypo-down-open"></span>
-                                   </a>
-                               </div>
-                           </div>
-
-                           <div class="body-nest" id="search_div"  style="display: none">
-                               <div class="form_left">
-                                   <form role="form" class="form-inline">
-                                       <div class="form-group">
-                                           <label for="exampleInputEmail2" class="sr-only">用户名字</label>
-                                           <input type="text" name="searchTxt" placeholder="用户名字"class="form-control">
-                                       </div>
-                                       <button onclick="$.table.search(this)" class="btn btn-success" type="button"><i class="fa fa-search"></i>&nbsp;搜索</button>
-                                   </form>
-                               </div>
-                           </div>
-                       </div>-->
-                    <!-- END搜索条件 -->
                     <!-- 空白页开始-->
                     <div class="nest" id="Blank_PageClose">
                         <div class="title-alt">
@@ -101,10 +71,7 @@
                             <table id="dataTable" class="table-striped footable-res footable metro-blue"
                                    data-page-size="6">
 
-
                             </table>
-
-
                         </div>
                     </div>
                 </div>
@@ -139,8 +106,7 @@
 <script type="text/javascript" th:src="@{/static/admin/assets/js/right_hight.js}"></script>
 
 <script type="text/javascript">
-    <!--jqueryexport表格导出插件 -->
-
+    //jquery export表格导出插件
     <!-- 导出 -->
     var dataUrl = window.rootPath + "/ConsumerController/list";
     var removeUrl = window.rootPath + "/ConsumerController/remove";
@@ -158,38 +124,60 @@
         search: false,
         dataColumns: [
             {
+                valign: "middle",
+                align: "center",
                 checkbox: true
             },
             {
                 field: 'id',
+                valign: "middle",
+                align: "center",
                 title: '序号'
             },
             {
                 field: 'username',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '登录名称'
             },
             {
                 field: 'nickname',
+                valign: "middle",
+                align: "center",
                 title: '昵称'
             },
             {
                 field: 'gender',
+                valign: "middle",
+                align: "center",
                 title: '性别'
             },
             {
                 field: 'birthdate',
+                valign: "middle",
+                align: "center",
                 title: '出生日期'
             },
             {
                 field: 'idNumber',
+                valign: "middle",
+                align: "center",
                 title: '身份证号'
             },
             {
                 field: 'homeAddress',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '家庭详细地址'
             },
             {
                 field: 'userPic',
+                valign: "middle",
+                align: "center",
                 title: '用户照片',
                 formatter : function (value, row, index) {
                     return "<img style='width: 50px;height: 50px;' src='"+value+"' alt=''>"
@@ -197,10 +185,14 @@
             },
             {
                 field: 'phone',
+                valign: "middle",
+                align: "center",
                 title: '监护人手机号'
             },
             {
                 title: '操作',
+                valign: "middle",
+                align: "center",
                 formatter: function (value, row, index) {
                     var id = row.id;
                     var actions = [];
@@ -215,7 +207,7 @@
     $(function () {
         var oTab = $.table.oTableInit(options);
         oTab.Init();
-    })
+    });
 </script>
 
 

@@ -66,10 +66,7 @@
                             <table id="dataTable" class="table-striped footable-res footable metro-blue"
                                    data-page-size="6">
 
-
                             </table>
-
-
                         </div>
                     </div>
                 </div>
@@ -104,8 +101,7 @@
 <script type="text/javascript" th:src="@{/static/admin/assets/js/right_hight.js}"></script>
 
 <script type="text/javascript">
-    <!--jqueryexport表格导出插件 -->
-
+    //jquery export表格导出插件
     <!-- 导出 -->
     var dataUrl = window.rootPath + "/UserVaccinationController/list";
     var removeUrl = window.rootPath + "/UserVaccinationController/remove";
@@ -123,46 +119,78 @@
         search: false,
         dataColumns: [
             {
+                valign: "middle",
+                align: "center",
                 checkbox: true
             },
             {
                 field: 'id',
+                valign: "middle",
+                align: "center",
                 title: '序号'
             },
             {
                 field: 'vaccinationName',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '接种疫苗名称'
             },
             {
                 field: 'vaccinationUserId',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '接种疫苗用户id'
             },
             {
                 field: 'vaccinationUserNickname',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '接种疫苗用户昵称'
             },
             {
                 field: 'vaccinationUserIdNumber',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '接种疫苗用户身份证'
             },
             {
                 field: 'vaccinationDate',
+                valign: "middle",
+                align: "center",
                 title: '接种疫苗日期'
             },
             {
                 field: 'vaccinationAmount',
+                valign: "middle",
+                align: "center",
                 title: '接种疫苗次数'
             },
             {
                 field: 'vaccinationPlace',
+                valign: "middle",
+                align: "center",
                 title: '接种部位'
             },
             {
                 field: 'vaccinationHospital',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '接种医院'
             },
             {
                 title: '操作',
+                valign: "middle",
+                align: "center",
                 formatter: function (value, row, index) {
                     var id = row.id;
                     var actions = [];

@@ -18,6 +18,18 @@
             list-style-type: none;
             float: left;
         }
+
+        .shortSelect {
+            background: #fafdfe;
+            height: 30px;
+            width: 100px;
+            line-height: 28px;
+            text-align-last: center;
+            border: 1px solid #9bc0dd;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+        }
     </style>
 
 </head>
@@ -61,15 +73,17 @@
                                 <button onclick="$.operate.batRemove()" type="button" class="btn btn-info">
                                     <span class="entypo-trash"></span>&nbsp;&nbsp;删除
                                 </button>
+                                <select class="shortSelect" id="overdueType" onchange="$.table.searchOverdueType(this)">
+                                    <option value="">有效期类别</option>
+                                    <option value="1">有效期内</option>
+                                    <option value="2">已过期</option>
+                                </select>
                             </div>
                             <!-- 工具条 end-->
                             <table id="dataTable" class="table-striped footable-res footable metro-blue"
                                    data-page-size="6">
 
-
                             </table>
-
-
                         </div>
                     </div>
                 </div>
@@ -104,8 +118,7 @@
 <script type="text/javascript" th:src="@{/static/admin/assets/js/right_hight.js}"></script>
 
 <script type="text/javascript">
-    <!--jqueryexport表格导出插件 -->
-
+    //jquery export表格导出插件
     <!-- 导出 -->
     var dataUrl = window.rootPath + "/VaccineInfoController/list";
     var removeUrl = window.rootPath + "/VaccineInfoController/remove";
@@ -123,48 +136,76 @@
         search: false,
         dataColumns: [
             {
+                valign: "middle",
+                align: "center",
                 checkbox: true
             },
             {
                 field: 'id',
+                valign: "middle",
+                align: "center",
                 title: '序号'
             },
             {
                 field: 'vaccineName',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '疫苗名称'
             },
             {
                 field: 'approvalNumber',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '批准文号'
             },
             {
                 field: 'productionNumber',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '产品批号'
             },
             {
                 field: 'productionDate',
+                valign: "middle",
+                align: "center",
                 title: '生产日期'
             },
             {
                 field: 'effectiveDate',
+                valign: "middle",
+                align: "center",
                 title: '有效日期'
             },
             {
                 field: 'factoryName',
+                valign: "middle",
+                align: "center",
+                cellStyle: $.table.formatTableUnit,
+                formatter: $.table.paramsMatter,
                 title: '生产厂名称'
             },
             {
                 field: 'inventory',
-                title: '库存',
+                valign: "middle",
+                align: "center",
+                title: '库存'
             },
             {
                 field: 'isOverdue',
+                valign: "middle",
+                align: "center",
                 title: '类型',
                 formatter: function (value, row, index) {
                     var actions = [];
-                    if(value==1){
+                    if (value == 1) {
                         actions.push('<span class="label label-primary">有效期内</span>');
-                    }else if(value==2){
+                    } else if (value == 2) {
                         actions.push('<span class="label label-danger">已过期</span>');
                     }
                     return actions.join('');
@@ -176,13 +217,14 @@
             },
             {
                 title: '操作',
+                valign: "middle",
+                align: "center",
                 formatter: function (value, row, index) {
                     var id = row.id;
                     var actions = [];
                     actions.push('<a class="btn btn-success btn-xs"  href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                     actions.push('<a class="btn btn-danger btn-xs" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                     return actions.join('');
-
                     //return '<a class="btn btn-xs btn-danger" onclick="delPermission(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>';
                 }
             }]
@@ -196,7 +238,6 @@
 
 <script type="text/javascript">
     //var editPwdUrl = window.rootPath + "/UserController/editPwd/{id}";
-
     function updatePwd() {
         var rows = $.common.isEmpty($.table._option.id) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.id);
         if (rows.length == 0) {
@@ -206,19 +247,48 @@
             $.modal.alertWarning("请选择一条记录");
             return
         }
-
-
         var url = editPwdUrl.replace("{id}", rows.join());
         var data = {
             "id": rows.join()
         };
         $.modal.open("修改密码", url);
     }
-
 </script>
-
-
+<!--<script type="text/javascript">
+    $(function () {
+        $("#overdueType").change(function () {
+            //改变获取值
+            var overdueType = $("#overdueType").val();
+            //检验是否获取到值
+            //alert(overdueType);
+            $.ajax({
+                url: rootPath + "/VaccineInfoController/overdueType",
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                async: "true",
+                data: {
+                    overdueType: overdueType
+                },
+                success: function (data) {
+                    //  $("#dataTable").bootstrapTable('destroy');
+                    console.log(data);
+                    // $("#dataTable").val(data);
+                    // var params = $("#dataTable").val(data[i]);
+                    //$("#dataTable").bootstrapTable(params)
+                    // $("#dataTable").bootstrapTable("load",data[i]);
+                    //清空列表
+                    $("#dataTable").bootstrapTable("destroy");
+                    for (var i = 0; i < data.list.length; i++) {
+                        $("#dataTable").bootstrapTable(data.list[i]);
+                    }
+                },
+                error: function (request) {
+                    $.modal.alertError("没有已过期的疫苗");
+                }
+            })
+        })
+    })
+</script>-->
 </body>
-
-
 </html>

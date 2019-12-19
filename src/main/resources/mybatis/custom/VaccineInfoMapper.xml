@@ -16,4 +16,7 @@
     <select id="queryVaccineInfo" parameterType="String" resultType="com.fc.test.model.auto.TSysVaccineInfo">
        select * from t_sys_vaccine_info
  </select>
+    <select id="queryVaccineType" parameterType="INTEGER" resultType="com.fc.test.model.auto.TSysVaccineInfo">
+       select * from t_sys_vaccine_info where is_overdue=#{overdueType}
+ </select>
 </mapper>

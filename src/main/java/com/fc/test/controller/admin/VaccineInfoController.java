@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @ClassName VaccineInfoController
  * @Description 疫苗信息管理 Controller
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @Controller
 @RequestMapping("/VaccineInfoController")
-public class VaccineInfoController extends BaseController{
+public class VaccineInfoController extends BaseController {
 
     private String prefix = "admin/vaccine";
 
@@ -40,8 +42,8 @@ public class VaccineInfoController extends BaseController{
     @PostMapping("/list")
     @RequiresPermissions("system:vaccineInfo:list")
     @ResponseBody
-    public Object list(Tablepar tablepar, String searchTxt) {
-        PageInfo<TSysVaccineInfo> page = sysVaccineInfoService.list(tablepar, searchTxt);
+    public Object list(Tablepar tablepar, String searchTxt, Integer overdueType) {
+        PageInfo<TSysVaccineInfo> page = sysVaccineInfoService.list(tablepar, searchTxt, overdueType);
         TableSplitResult<TSysVaccineInfo> result = new TableSplitResult<TSysVaccineInfo>(page.getPageNum(), page.getTotal(), page.getList());
         return result;
     }
@@ -111,4 +113,17 @@ public class VaccineInfoController extends BaseController{
         return toAjax(sysVaccineInfoService.updateVaccineInfo(tSysVaccineInfo));
     }
 
+    /**
+     * @description: 疫苗有效期类别
+     * @author: X
+     * @updateTime: 2019/12/16 14:28
+     */
+
+   /* @PostMapping("overdueType")
+    @ResponseBody
+    public Object vaccineType(@RequestParam("overdueType") Integer overdueType) {
+        PageInfo<TSysVaccineInfo> result = sysVaccineInfoService.listType(overdueType);
+        //TableSplitResult<TSysVaccineInfo> result = new TableSplitResult<TSysVaccineInfo>(pageInfo.getPageNum(), pageInfo.getTotal(), pageInfo.getList());
+        return result;
+    }*/
 }
