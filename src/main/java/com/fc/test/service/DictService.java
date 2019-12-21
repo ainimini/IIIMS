@@ -1,14 +1,13 @@
 package com.fc.test.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.fc.test.mapper.auto.TSysDictDataMapper;
 import com.fc.test.model.auto.TSysDictData;
 import com.fc.test.model.auto.TSysDictDataExample;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("dict")
 public class DictService {

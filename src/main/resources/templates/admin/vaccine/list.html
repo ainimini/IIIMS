@@ -48,6 +48,38 @@
             <!-- 结束内容 -->
             <div class="row">
                 <div class="col-sm-12">
+                    <!-- 搜索条件 -->
+
+                    <div class="nest" id="inlineClose">
+                        <div class="title-alt">
+                            <h6>搜索条件</h6>
+                            <div class="titleClose">
+                                <a class="gone" href="#inlineClose">
+                                    <span class="entypo-cancel"></span>
+                                </a>
+                            </div>
+                            <div class="titleToggle">
+                                <a class="nav-toggle-alt" href="#search_div">
+                                    <span class="entypo-down-open"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="body-nest" id="search_div" style="display: none">
+                            <div class="form_left">
+                                <form role="form" class="form-inline">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail2" class="sr-only">疫苗名称</label>
+                                        <input type="text" id="searchText" name="searchText" placeholder="疫苗名称" class="form-control">
+                                    </div>
+                                    <button onclick="$.table.search(this)" class="btn btn-success" type="button"><i
+                                            class="fa fa-search"></i>&nbsp;搜索
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END搜索条件 -->
                     <!-- 空白页开始-->
                     <div class="nest" id="Blank_PageClose">
                         <div class="title-alt">
@@ -73,7 +105,7 @@
                                 <button onclick="$.operate.batRemove()" type="button" class="btn btn-info">
                                     <span class="entypo-trash"></span>&nbsp;&nbsp;删除
                                 </button>
-                                <select class="shortSelect" id="overdueType" onchange="$.table.searchOverdueType(this)">
+                                <select class="shortSelect" id="searchSelect" onchange="$.table.searchSelect(this)">
                                     <option value="">有效期类别</option>
                                     <option value="1">有效期内</option>
                                     <option value="2">已过期</option>

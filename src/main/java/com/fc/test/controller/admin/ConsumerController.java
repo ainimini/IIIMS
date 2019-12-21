@@ -61,8 +61,8 @@ public class ConsumerController extends BaseController {
     @PostMapping("/list")
     @RequiresPermissions("system:consumer:list")
     @ResponseBody
-    public Object list(Tablepar tablepar, String searchTxt){
-        PageInfo<TSysConsumer> page=consumerService.list(tablepar,searchTxt);
+    public Object list(Tablepar tablepar, String searchTxt, String searchText){
+        PageInfo<TSysConsumer> page=consumerService.list(tablepar, searchTxt, searchText);
         TableSplitResult<TSysConsumer> result=new TableSplitResult<TSysConsumer>(page.getPageNum(), page.getTotal(), page.getList());
         return  result;
     }

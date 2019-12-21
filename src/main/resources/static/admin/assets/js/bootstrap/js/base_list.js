@@ -12,7 +12,6 @@
                 var oTableInit = new Object();
                 //初始化Table
                 oTableInit.Init = function () {
-                    $("#dataTable").bootstrapTable("destroy");
                     $('#dataTable').bootstrapTable({
                         contentType: "application/x-www-form-urlencoded",
                         url: parms.dataUrl,     //请求后台的URL（*）
@@ -39,7 +38,7 @@
                         showToggle: !0,//排版按钮
                         showColumns: !0,//显示列按钮
                         columns: parms.dataColumns,
-                        showToggle: false, //是否显示详细视图和列表视图的切换按钮
+                        showToggle: true, //是否显示详细视图和列表视图的切换按钮
                         //>>>>>>>>>>>>>>导出excel表格设置
                         showExport: true,  //是否显示导出按钮
                         buttonsAlign: "right",  //按钮位置
@@ -97,6 +96,7 @@
                     search[field.name] = field.value;
                 });
                 var params = $("#dataTable").bootstrapTable("getOptions");
+                console.log(params.searchText);
                 params.queryParams = function (params) {
                     /* return {
                             pageSize: params.pageSize,  //每页要显示的数据条数
@@ -108,19 +108,23 @@
                         };*/
                     search.pageSize = params.pageSize;
                     search.pageNum = params.pageNumber;
-                    search.searchText = params.searchText;
+                    if ($.common.isNotEmpty($("#searchText").val())) {
+                        search.searchText = $("#searchText").val();
+                    }else {
+                        search.searchTxt = params.searchText;
+                    }
                     return search;
                 };
                 $("#dataTable").bootstrapTable("refresh", params);
             },
-            searchOverdueType: function (my) {//查询条件(疫苗有效期类别)
+            searchSelect: function (my) {//查询条件(疫苗有效期类别)
                 var form = $(my).parents("form");
-                var searchOverdueType = {};
+                var search = {};
                 $.each(form.serializeArray(), function (i, field) {
-                    searchOverdueType[field.name] = field.value;
+                    search[field.name] = field.value;
                 });
-                var parameters = $("#dataTable").bootstrapTable("getOptions");
-                parameters.queryParams = function (parameters) {
+                var params = $("#dataTable").bootstrapTable("getOptions");
+                params.queryParams = function (params) {
                     /* return {
                             pageSize: params.pageSize,  //每页要显示的数据条数
                             pageNum: params.pageNumber, //页码
@@ -129,12 +133,16 @@
                             sortOrder: params.order, // 排序规则
                             dataId: $("#dataId").val() // 额外添加的参数
                         };*/
-                    searchOverdueType.pageSize = parameters.pageSize;
-                    searchOverdueType.pageNum = parameters.pageNumber;
-                    searchOverdueType.overdueType = $("#overdueType").val();
-                    return searchOverdueType;
+                    search.pageSize = params.pageSize;
+                    search.pageNum = params.pageNumber;
+                    if ($.common.isNotEmpty($("#searchSelect").val())) {
+                        search.searchSelect = $("#searchSelect").val();
+                    }else {
+                        search.searchTxt = params.searchText;
+                    }
+                    return search;
                 };
-                $("#dataTable").bootstrapTable("refresh", parameters);
+                $("#dataTable").bootstrapTable("refresh", params);
             },
             selectColumns: function (column) {
                 return $.map($("#dataTable").bootstrapTable("getSelections"), function (row) {

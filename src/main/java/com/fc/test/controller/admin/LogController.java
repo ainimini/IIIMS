@@ -50,8 +50,8 @@ public class LogController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("system:log:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<TsysOperLog> page=sysOperLogService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<TsysOperLog> page=sysOperLogService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<TsysOperLog> result=new TableSplitResult<TsysOperLog>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

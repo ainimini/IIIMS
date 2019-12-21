@@ -41,8 +41,8 @@ public class SysCityController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("gen:sysCity:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<SysCity> page=sysCityService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<SysCity> page=sysCityService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<SysCity> result=new TableSplitResult<SysCity>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

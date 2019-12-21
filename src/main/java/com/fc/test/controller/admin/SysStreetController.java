@@ -41,8 +41,8 @@ public class SysStreetController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("gen:sysStreet:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<SysStreet> page=sysStreetService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<SysStreet> page=sysStreetService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<SysStreet> result=new TableSplitResult<SysStreet>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

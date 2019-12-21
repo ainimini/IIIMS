@@ -41,8 +41,8 @@ public class SysAreaController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("gen:sysArea:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<SysArea> page=sysAreaService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<SysArea> page=sysAreaService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<SysArea> result=new TableSplitResult<SysArea>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

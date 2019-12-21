@@ -56,8 +56,8 @@ public class EmailController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("system:email:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<TSysEmail> page=tSysEmailService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<TSysEmail> page=tSysEmailService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<TSysEmail> result=new TableSplitResult<TSysEmail>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

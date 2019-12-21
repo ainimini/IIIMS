@@ -51,8 +51,8 @@ public class UserVaccinationController extends BaseController {
     @PostMapping("/list")
     @RequiresPermissions("system:userVaccination:list")
     @ResponseBody
-    public Object list(Tablepar tablepar, String searchTxt) {
-        PageInfo<TSysUserVaccinationInfo> page = userVaccinationService.list(tablepar, searchTxt);
+    public Object list(Tablepar tablepar, String searchTxt, String searchText) {
+        PageInfo<TSysUserVaccinationInfo> page = userVaccinationService.list(tablepar, searchTxt, searchText);
         TableSplitResult<TSysUserVaccinationInfo> result = new TableSplitResult<TSysUserVaccinationInfo>(page.getPageNum(), page.getTotal(), page.getList());
         return result;
     }

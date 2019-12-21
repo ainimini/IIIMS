@@ -45,12 +45,15 @@ public class UserVaccinationService implements BaseService<TSysUserVaccinationIn
      * @param pageSize
      * @return
      */
-    public PageInfo<TSysUserVaccinationInfo> list(Tablepar tablepar, String vaccinationUserIdNumber) {
+    public PageInfo<TSysUserVaccinationInfo> list(Tablepar tablepar, String searchTxt, String searchText) {
         //模糊查询
         TSysUserVaccinationInfoExample testExample = new TSysUserVaccinationInfoExample();
         testExample.setOrderByClause("id+0 DESC");
-        if (vaccinationUserIdNumber != null && !"".equals(vaccinationUserIdNumber)) {
-            testExample.createCriteria().andVaccinationUserIdNumberLike("%" + vaccinationUserIdNumber + "%");
+        if (searchTxt != null && !"".equals(searchTxt)) {
+            testExample.createCriteria().andVaccinationUserIdNumberLike("%" + searchTxt + "%");
+        }
+        if (searchText != null && !"".equals(searchText)) {
+            testExample.createCriteria().andVaccinationUserIdNumberLike("%" + searchText + "%");
         }
 
         PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());

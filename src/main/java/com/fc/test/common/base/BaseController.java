@@ -36,7 +36,7 @@ public class BaseController
 	@Autowired
 	public SysPermissionService sysPermissionService;
 	
-	//文件上传
+	/*//文件上传
 	@Autowired
 	public SysFileService sysFileService;
 	
@@ -47,7 +47,7 @@ public class BaseController
 	//文件存储管理表
 	@Autowired
 	public SysFileDatasService sysFileDatasService;
-	
+	*/
 	//日志操作
 	@Autowired
 	public SysOperLogService sysOperLogService;

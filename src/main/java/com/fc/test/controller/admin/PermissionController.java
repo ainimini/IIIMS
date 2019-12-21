@@ -52,8 +52,8 @@ public class PermissionController  extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("system:permission:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<TsysPermission> page= sysPermissionService.list(tablepar, searchTxt) ;
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<TsysPermission> page= sysPermissionService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<TsysPermission> result=new TableSplitResult<TsysPermission>(page.getPageNum(), page.getTotal(), page.getList());
 		return  result;
 	}

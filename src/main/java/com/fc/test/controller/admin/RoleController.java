@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.service.ApiListing;
 
 
 /**
@@ -54,8 +55,8 @@ public class RoleController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("system:user:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<TsysRole> page=sysRoleService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<TsysRole> page=sysRoleService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<TsysRole> result=new TableSplitResult<TsysRole>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

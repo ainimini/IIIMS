@@ -58,11 +58,14 @@ public class SysUserService implements BaseService<TsysUser, TsysUserExample>{
      * @param pageSize
      * @return
      */
-    public PageInfo<TsysUser> list(Tablepar tablepar,String username){
+    public PageInfo<TsysUser> list(Tablepar tablepar, String searchTxt, String searchText){
         TsysUserExample testExample=new TsysUserExample();
         testExample.setOrderByClause("id+0 DESC");
-        if(username!=null&&!"".equals(username)){
-            testExample.createCriteria().andUsernameLike("%"+username+"%");
+        if(searchTxt!=null&&!"".equals(searchTxt)){
+            testExample.createCriteria().andUsernameLike("%"+searchTxt+"%");
+        }
+        if(searchText!=null&&!"".equals(searchText)){
+            testExample.createCriteria().andUsernameLike("%"+searchText+"%");
         }
 
         PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());

@@ -41,8 +41,8 @@ public class SysProvinceController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("gen:sysProvince:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<SysProvince> page=sysProvinceService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar, String searchTxt, String searchText){
+		PageInfo<SysProvince> page=sysProvinceService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<SysProvince> result=new TableSplitResult<SysProvince>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

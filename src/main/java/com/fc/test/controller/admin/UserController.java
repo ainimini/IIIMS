@@ -51,7 +51,7 @@ public class UserController extends BaseController{
     /**
      * list集合
      * @param tablepar
-     * @param searchTxt
+     * @param searchText
      * @return
      * @author fuce
      * @Date 2019年11月11日 下午4:14:40
@@ -59,8 +59,8 @@ public class UserController extends BaseController{
     @PostMapping("/list")
     @RequiresPermissions("system:user:list")
     @ResponseBody
-    public Object list(Tablepar tablepar,String searchTxt){
-        PageInfo<TsysUser> page=sysUserService.list(tablepar,searchTxt) ;
+    public Object list(Tablepar tablepar, String searchTxt, String searchText){
+        PageInfo<TsysUser> page=sysUserService.list(tablepar, searchTxt, searchText) ;
         TableSplitResult<TsysUser> result=new TableSplitResult<TsysUser>(page.getPageNum(), page.getTotal(), page.getList());
         return  result;
     }

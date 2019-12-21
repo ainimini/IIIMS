@@ -42,8 +42,8 @@ public class VaccineInfoController extends BaseController {
     @PostMapping("/list")
     @RequiresPermissions("system:vaccineInfo:list")
     @ResponseBody
-    public Object list(Tablepar tablepar, String searchTxt, Integer overdueType) {
-        PageInfo<TSysVaccineInfo> page = sysVaccineInfoService.list(tablepar, searchTxt, overdueType);
+    public Object list(Tablepar tablepar, String searchTxt, String searchText, Integer searchSelect) {
+        PageInfo<TSysVaccineInfo> page = sysVaccineInfoService.list(tablepar,searchTxt, searchText, searchSelect);
         TableSplitResult<TSysVaccineInfo> result = new TableSplitResult<TSysVaccineInfo>(page.getPageNum(), page.getTotal(), page.getList());
         return result;
     }

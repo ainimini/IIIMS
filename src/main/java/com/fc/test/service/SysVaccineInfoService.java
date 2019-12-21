@@ -43,14 +43,17 @@ public class SysVaccineInfoService implements BaseService<TSysVaccineInfo, TSysV
      * @param pageSize
      * @return
      */
-    public PageInfo<TSysVaccineInfo> list(Tablepar tablepar, String vaccineName, Integer overdueType) {
+    public PageInfo<TSysVaccineInfo> list(Tablepar tablepar,String searchTxt, String searchText, Integer searchSelect) {
         TSysVaccineInfoExample testExample = new TSysVaccineInfoExample();
         testExample.setOrderByClause("id+0 DESC");
-        if (vaccineName != null && !"".equals(vaccineName)) {
-            testExample.createCriteria().andVaccineNameLike("%" + vaccineName + "%");
+        if (searchTxt != null && !"".equals(searchTxt)) {
+            testExample.createCriteria().andVaccineNameLike("%" + searchTxt + "%");
         }
-        if (overdueType != null && !"".equals(overdueType)) {
-            testExample.createCriteria().andIsOverdueEqualTo(overdueType);
+        if (searchText != null && !"".equals(searchText)) {
+            testExample.createCriteria().andVaccineNameLike("%" + searchText + "%");
+        }
+        if (searchSelect != null && !"".equals(searchSelect)) {
+            testExample.createCriteria().andIsOverdueEqualTo(searchSelect);
         }
 
         PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());

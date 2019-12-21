@@ -68,12 +68,15 @@ public class ConsumerService implements BaseService<TSysConsumer, TSysConsumerEx
      * @param pageSize
      * @return
      */
-    public PageInfo<TSysConsumer> list(Tablepar tablepar, String idNumber) {
+    public PageInfo<TSysConsumer> list(Tablepar tablepar, String searchTxt, String searchText) {
         //模糊查询
         TSysConsumerExample testExample = new TSysConsumerExample();
         testExample.setOrderByClause("id+0 DESC");
-        if (idNumber != null && !"".equals(idNumber)) {
-            testExample.createCriteria().andIdNumberLike("%" + idNumber + "%");
+        if (searchTxt != null && !"".equals(searchTxt)) {
+            testExample.createCriteria().andIdNumberLike("%" + searchTxt + "%");
+        }
+        if (searchText != null && !"".equals(searchText)) {
+            testExample.createCriteria().andIdNumberLike("%" + searchText + "%");
         }
 
         PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());

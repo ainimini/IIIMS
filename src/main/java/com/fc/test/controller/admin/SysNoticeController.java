@@ -45,8 +45,8 @@ public class SysNoticeController extends BaseController{
 	@PostMapping("list")
 	@RequiresPermissions("gen:sysNotice:list")
 	@ResponseBody
-	public Object list(Tablepar tablepar,String searchTxt){
-		PageInfo<SysNotice> page=sysNoticeService.list(tablepar,searchTxt) ; 
+	public Object list(Tablepar tablepar,String searchTxt, String searchText){
+		PageInfo<SysNotice> page=sysNoticeService.list(tablepar, searchTxt, searchText) ;
 		TableSplitResult<SysNotice> result=new TableSplitResult<SysNotice>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
 	}

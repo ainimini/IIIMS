@@ -2,8 +2,9 @@ package com.fc.test.mapper.auto;
 
 import com.fc.test.model.auto.TSysDictData;
 import com.fc.test.model.auto.TSysDictDataExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 字典数据表

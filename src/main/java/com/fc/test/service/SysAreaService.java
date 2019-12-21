@@ -34,11 +34,14 @@ public class SysAreaService {
 	 * @param pageSize
 	 * @return
 	 */
-	 public PageInfo<SysArea> list(Tablepar tablepar,String name){
+	 public PageInfo<SysArea> list(Tablepar tablepar, String searchTxt, String searchText){
 	        SysAreaExample testExample=new SysAreaExample();
 	        testExample.setOrderByClause("id ASC");
-	        if(name!=null&&!"".equals(name)){
-	        	testExample.createCriteria().andAreaNameLike("%"+name+"%");
+		 if(searchTxt!=null&&!"".equals(searchTxt)){
+			 testExample.createCriteria().andAreaNameLike("%"+searchTxt+"%");
+		 }
+	        if(searchText!=null&&!"".equals(searchText)){
+	        	testExample.createCriteria().andAreaNameLike("%"+searchText+"%");
 	        }
 
 	        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());

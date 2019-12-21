@@ -43,11 +43,14 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 	 * @param pageSize
 	 * @return
 	 */
-	 public PageInfo<TsysPermission> list(Tablepar tablepar, String searchTxt){
+	 public PageInfo<TsysPermission> list(Tablepar tablepar, String searchTxt, String searchText){
 	        TsysPermissionExample testExample=new TsysPermissionExample();
-	        testExample.setOrderByClause("id+0 DESC");
-	        if(searchTxt!=null&&!"".equals(searchTxt)){
-	        	testExample.createCriteria().andNameLike("%"+searchTxt+"%");
+	        testExample.setOrderByClause("order_num  is null  ASC,order_num  ASC");
+		 if(searchTxt!=null&&!"".equals(searchTxt)){
+			 testExample.createCriteria().andNameLike("%"+searchTxt+"%");
+		 }
+	        if(searchText!=null&&!"".equals(searchText)){
+	        	testExample.createCriteria().andNameLike("%"+searchText+"%");
 	        }
 
 	        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
